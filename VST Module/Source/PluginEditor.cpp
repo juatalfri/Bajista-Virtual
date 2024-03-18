@@ -15,7 +15,7 @@ VSTModuleAudioProcessorEditor::VSTModuleAudioProcessorEditor (VSTModuleAudioProc
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (500, 500);
 }
 
 VSTModuleAudioProcessorEditor::~VSTModuleAudioProcessorEditor()
@@ -26,11 +26,19 @@ VSTModuleAudioProcessorEditor::~VSTModuleAudioProcessorEditor()
 void VSTModuleAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
 
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    juce::MidiFile song;
+    juce::File filePath = juce::File::getCurrentWorkingDirectory().getChildFile("../../Media/Michael_Jackson_-_Billie_Jean (Track 7 Bajo).mid");
+
+    juce::FileInputStream songStream(filePath);
+    song.readFrom(songStream);
+    song.convertTimestampTicksToSeconds();
+    juce::MidiMessageSequence bassTrack = *song.getTrack(7);
+
+    g.setColour(juce::Colours::white);
+    g.setFont(15.0f);
+    g.drawFittedText("Este archivo MIDI contiene " + std::to_string(song.getNumTracks()) + " canales", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void VSTModuleAudioProcessorEditor::resized()

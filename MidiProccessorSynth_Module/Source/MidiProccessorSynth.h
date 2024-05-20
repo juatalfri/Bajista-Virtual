@@ -59,7 +59,7 @@ struct SynthAudioSource final : public AudioSource
         {
             juce::MidiMessage& msg = track->getEventPointer(i)->message;
             if (msg.isNoteOnOrOff()) {
-                trackDescription.push_back(msg.getNoteNumber());
+                noteTimestamp.push_back(std::pair<int, double>(msg.getNoteNumber(), msg.getTimeStamp()));
                 midiMessages.push_back(msg);
             }
         }
@@ -125,8 +125,8 @@ struct SynthAudioSource final : public AudioSource
     //Numero de tracks totales en el archivo midi
     std::atomic<int> numTracks;
 
-    // Vector con las notas midi asociadas a los mensajes midi
-    std::vector<juce::int16> trackDescription;
+    // Vector con las notas midi asociadas a su timestamp
+    std::vector<std::pair<int, double>> noteTimestamp;
 };
 
 //==============================================================================

@@ -17,7 +17,7 @@ struct SynthAudioSource final : public AudioSource
         setUsingSampledSound();
     }
 
-    // Inizializa el audio .wav que sonar para cada nota que pase por el synth
+    // Inicializa el audio .wav que sonar para cada nota que pase por el synth
     void setUsingSampledSound()
     {
         WavAudioFormat wavFormat;
@@ -65,7 +65,7 @@ struct SynthAudioSource final : public AudioSource
         }
     }
 
-    // Prepara el synth para comenzar a sonar, normalizando las notas y añadiendolas a un midibuffer
+    // Prepara el synth para comenzar a sonar, normalizando las notas y aÃ±adiendolas a un midibuffer
     void prepareToPlay(int samplesPerBlockExpected, double sampleRate)
     {
         midiCollector.reset(sampleRate);
@@ -178,12 +178,12 @@ private:
 //==============================================================================
 //==============================================================================
 
-class MidiProccessorSynth final : public Component,
+class MidiProcessorSynth final : public Component,
     public juce::Button::Listener,
     public juce::ComboBox::Listener
 {
 public:
-    MidiProccessorSynth()
+    MidiProcessorSynth()
     {
         // Boton para seleccionar el archivo midi
         addAndMakeVisible(buttonLoadMIDIFile = new juce::TextButton("Cargar archivo MIDI"));
@@ -198,6 +198,10 @@ public:
         addAndMakeVisible(buttonPlayMIDIFile = new juce::TextButton("Reproducir archivo MIDI"));
         buttonPlayMIDIFile->addListener(this);
 
+        // Boton para parar la reproduccion
+        addAndMakeVisible(buttonStopMIDIFile = new juce::TextButton("Pausar reproduccion"));
+        buttonStopMIDIFile->addListener(this);
+
         synthAudioSource.setUsingSampledSound();
         addAndMakeVisible(liveAudioDisplayComp);
 
@@ -205,7 +209,7 @@ public:
         setSize(650, 500);
     }
 
-    ~MidiProccessorSynth() override
+    ~MidiProcessorSynth() override
     {
         audioSourcePlayer.setSource(nullptr);
         audioDeviceManager.removeMidiInputDeviceCallback({}, &(synthAudioSource.midiCollector));
@@ -224,6 +228,7 @@ public:
         buttonLoadMIDIFile->setBounds(20, 20, 200, 50);
         comboTrack->setBounds(250, 20, 200, 50);
         buttonPlayMIDIFile->setBounds(20, 75, 200, 50);
+        buttonStopMIDIFile->setBounds(250, 75, 200, 50);
         liveAudioDisplayComp.setBounds(10, 150, getWidth() - 20, getHeight() - 170);
     }
 
@@ -238,6 +243,7 @@ public:
             if (seleccion.browseForFileToOpen())
             {
                 synthAudioSource.readMidi(seleccion.getResult());
+                synthAudioSource.currentTrack.store(1);
                 updateTrackComboBox();
             }
         }
@@ -249,7 +255,13 @@ public:
             audioDeviceManager.initialise(0, 2, nullptr, true);
             audioDeviceManager.addAudioCallback(&callback);
             audioDeviceManager.addMidiInputDeviceCallback({}, &(synthAudioSource.midiCollector));
-
+        }
+        if (button == buttonStopMIDIFile)
+        {
+            synthAudioSource.midiMessages.clear();
+            audioSourcePlayer.setSource(nullptr);
+            audioDeviceManager.removeMidiInputDeviceCallback({}, &(synthAudioSource.midiCollector));
+            audioDeviceManager.removeAudioCallback(&callback);
         }
     }
 
@@ -283,8 +295,9 @@ private:
     //==============================================================================
     juce::ScopedPointer<juce::TextButton> buttonLoadMIDIFile;
     juce::ScopedPointer<juce::TextButton> buttonPlayMIDIFile;
+    juce::ScopedPointer<juce::TextButton> buttonStopMIDIFile;
     juce::ScopedPointer<juce::ComboBox> comboTrack;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiProccessorSynth)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiProcessorSynth)
 };
 

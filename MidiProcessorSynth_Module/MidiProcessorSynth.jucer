@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="MidiProccessorSynth" companyName="JUCE" version="1.0.0"
+<JUCERPROJECT name="MidiProcessorSynth" companyName="JUCE" version="1.0.0"
               companyWebsite="http://juce.com" displaySplashScreen="1" projectType="guiapp"
               useAppConfig="0" addUsingNamespaceToJuceHeader="1" id="vMEHkI"
               jucerFormatVersion="1">
-  <MAINGROUP id="tPaKvT" name="MidiProccessorSynth">
+  <MAINGROUP id="tPaKvT" name="MidiProcessorSynth">
     <GROUP id="{10275415-B325-41EE-65FB-128D85302EAE}" name="Source">
+      <FILE id="skwgjS" name="MidiProcessorSynthWrapper.h" compile="0" resource="0"
+            file="Source/MidiProcessorSynthWrapper.h"/>
+      <FILE id="l6D4rh" name="MidiProcessorSynth.h" compile="0" resource="0"
+            file="Source/MidiProcessorSynth.h"/>
       <FILE id="mmjAr9" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="GuDI4F" name="AudioSynthesiserDemo.h" compile="0" resource="0"
-            file="Source/AudioSynthesiserDemo.h"/>
     </GROUP>
     <GROUP id="cLjNHn" name="Assets">
-      <FILE id="ixG3Em" name="DemoUtilities.h" compile="0" resource="0" file="Source/DemoUtilities.h"/>
       <FILE id="h21ewj" name="AudioLiveScrollingDisplay.h" compile="0" resource="0"
             file="Source/AudioLiveScrollingDisplay.h"/>
     </GROUP>

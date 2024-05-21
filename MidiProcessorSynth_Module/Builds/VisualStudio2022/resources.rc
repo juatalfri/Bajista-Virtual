@@ -16,9 +16,9 @@ BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "CompanyName",  "JUCE\0"
-      VALUE "FileDescription",  "MidiProccessorSynth\0"
+      VALUE "FileDescription",  "MidiProcessorSynth\0"
       VALUE "FileVersion",  "1.0.0\0"
-      VALUE "ProductName",  "MidiProccessorSynth\0"
+      VALUE "ProductName",  "MidiProcessorSynth\0"
       VALUE "ProductVersion",  "1.0.0\0"
     END
   END

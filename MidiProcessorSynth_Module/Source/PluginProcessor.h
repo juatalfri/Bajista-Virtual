@@ -55,8 +55,9 @@ public:
 
     //==============================================================================
     void setUsingSampledSound();
-    void readMidi(const juce::File fileName);
+    void readMidi(File fileName);
     void processMidi();
+    void loadMidi(int sampleRate);
 
     //==============================================================================
 private:
@@ -80,14 +81,18 @@ private:
     //Notas tocadas
     int samplesPlayed = 0;
 
+    //Tiempos para cambiar de canción
+    double initialOffset = 0;
+    double currentOffset = 0;
+
+    //.txt que contiene la ruta del archivo midi
+    File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/MidiPath.txt");
+
+    //Flag para controlar cambio de archivo midi
+    AudioParameterFloat* midiFileChanged;
+
     //Track seleccionado
-    std::atomic<int> currentTrack;
-
-    //Numero de tracks totales en el archivo midi
-    std::atomic<int> numTracks;
-
-    // Vector con las notas midi asociadas a su timestamp
-    std::vector<std::pair<int, double>> noteTimestamp;
+    AudioParameterFloat* currentTrack;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiProcessorSynth_ModuleAudioProcessor)

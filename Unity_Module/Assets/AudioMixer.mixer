@@ -29,7 +29,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -8484137637020333507}
-  - {fileID: 6758434208366793817}
+  - {fileID: 3802192746289785960}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -49,7 +49,11 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 0
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: e887888d0d2e0df4f9c6aba9dbaad4ed
+    name: CambiarMidi
+  - guid: 0e0c35c1e8536f34ca3e4ba16c520fd9
+    name: PistaBajo
   m_AudioMixerGroupViews:
   - guids:
     - 0304029b1a8fa684ab601303d90dd9ed
@@ -97,22 +101,64 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: Snapshot1
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 3c5902f4e293bb441bba1bd0abacda85
-  m_FloatValues: {}
+  m_FloatValues:
+    59aee620e7e3aab44b0dbaf6a84fe179: 0
+    f1f17820be559fd45a85624f230d968a: 1
+    2a1a2db0ef171ce44a08254040efddb6: 0.35
+    18fa13f09445aef4498ebd9d0b217ffb: 0
+    0e0c35c1e8536f34ca3e4ba16c520fd9: 0
+    12815fe12084e29478a338cfa7bf3d4f: -80
+    86a1d96299cf22746919d5b794ae3bef: 0
+    39cacb82a41d5734894d76be4399073c: 0
+    787f6592bb07ae640b6342223d8861f8: 1
+    bcb195046587eca49b228714ec0fcb18: 1
+    7901c6341312e124ca1608590c4b216f: 9.211
+    dce364a41f650b04b888c57d1bea6c40: 6
+    42cfa6a4f0ed47945a66ff58d68b8bc5: 0
+    f3cabbe56b4b06848a9b508ca4c52384: 50
+    7bf2238719738c74faa45f0158fdc1db: 0
+    a89549b7ffc8acc489256aad1f25887a: 0
+    2807cdd734beb1f4f8b70b59c60956c8: 0.139
+    0ed47068cacb0e54a839fcadf2ad7ad7: 1
+    9b354998e7458464dbbecb4ec672ed04: 0
+    2d8411a8b369e5d4894fa8e2ec804a33: 10
+    30422da8708a15646a14a973953856f6: 9.95
+    441352e8e3e2d9243aafe115b831a223: 0
+    275b0bd9fc1a4cc4392dc10a4888d7ef: 0
+    a641ff2a0ffda454da13bcedd2eafeab: 0.15
+    4ca2da8aeef4b944694296c5e979b026: 10
+    89e9e5aaae08bc647959933b2b7cf1cd: 10
+    468443da88971a34096c5082ab62f63e: 0.15
+    3e091f7bb0124ae4c83093e5a7ee36a9: 2
+    6763d6dbc0ffc9840a5a37e133ddf356: 0
+    6ef7631c4f3e3ec4b9281696e260bdd3: 0.35
+    7c67972d081f0584e9e939637f32a84f: 0.35
+    e887888d0d2e0df4f9c6aba9dbaad4ed: 0
+    3f7fbefd776d01f4da62212aae642f23: -10
+    6b78554eaaed43f4da5d1b85a86d54ad: 0.1
+    448309be47e51614aa9af10184965532: -80
+    acb1b5eefbdb01640a9ad1c5993fb34f: 1
+    aa03f85f420c7134b90c4e084493b201: 10
+    b20ccbffc562a3440a2e690778d7b757: 0.1
   m_TransitionOverrides: {}
---- !u!244 &6758434208366793817
+--- !u!244 &3802192746289785960
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: 331940e54fb962b45ba7f8c9f7e3cd5b
+  m_EffectID: 6183da0bf85b57241b25a2800755baff
   m_EffectName: audioplugin_MidiProcessorSynth_
-  m_MixLevel: 1390f45dc6ee63342933d5bfdf4a10c8
-  m_Parameters: []
+  m_MixLevel: 5824093b91e0fbb4c8ccf0a4df7e5f5a
+  m_Parameters:
+  - m_ParameterName: Midi cambiado
+    m_GUID: e887888d0d2e0df4f9c6aba9dbaad4ed
+  - m_ParameterName: Pista seleccion
+    m_GUID: 0e0c35c1e8536f34ca3e4ba16c520fd9
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0

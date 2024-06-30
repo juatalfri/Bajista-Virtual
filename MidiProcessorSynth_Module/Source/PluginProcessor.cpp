@@ -7,6 +7,14 @@
 */
 
 #include "PluginProcessor.h"
+#include <Windows.h>
+
+//Numero de tracks totales en el archivo midi
+int numTracks = 0;
+
+// Vectores con las notas midi y sus timestamps
+std::vector<int> notesNumber;
+std::vector<double> timestamps;
 
 //==============================================================================
 MidiProcessorSynth_ModuleAudioProcessor::MidiProcessorSynth_ModuleAudioProcessor()
@@ -14,6 +22,8 @@ MidiProcessorSynth_ModuleAudioProcessor::MidiProcessorSynth_ModuleAudioProcessor
         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
     )
 {
+    addParameter(midiFileChanged = new AudioParameterFloat("Midi cambiado", "Midi cambiado", 0, 1, 0));
+    addParameter(currentTrack = new AudioParameterFloat("Pista seleccionada", "Pista seleccionada", 0, 20, 0));
 }
 
 MidiProcessorSynth_ModuleAudioProcessor::~MidiProcessorSynth_ModuleAudioProcessor()
@@ -87,25 +97,8 @@ void MidiProcessorSynth_ModuleAudioProcessor::prepareToPlay(double sampleRate, i
 {
     setUsingSampledSound();
 
-    File seleccion = "C://Users//juano//Escritorio//TFG//Mi TFG//Bajista-Virtual//MidiProcessorSynth_Module//Media//Midi samples//Billie_Jean_(T7).mid";
-
-    if (seleccion.existsAsFile())
-    {
-        readMidi(seleccion);
-        currentTrack.store(7);
-        processMidi();
-    }
-
     midiCollector.reset(sampleRate);
     synth.setCurrentPlaybackSampleRate(sampleRate);
-
-    midiBuffer.clear();
-    for (int i = 0; i < notes.size(); i++)
-    {
-        MidiMessage note = notes[i];
-        double samplePosition = sampleRate * note.getTimeStamp();
-        midiBuffer.addEvent(note, samplePosition);
-    }
 }
 
 void MidiProcessorSynth_ModuleAudioProcessor::releaseResources()
@@ -142,9 +135,17 @@ bool MidiProcessorSynth_ModuleAudioProcessor::isBusesLayoutSupported(const Buses
 
 void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    juce::ScopedNoDenormals noDenormals;
-    int numSamples = buffer.getNumSamples();
+    if (initialOffset == 0)
+    {
+        initialOffset = Time::getMillisecondCounterHiRes();
 
+    }
+    if (midiFileChanged->get() == 1)
+    {
+        synth.allNotesOff(0, false);
+        loadMidi(getSampleRate());
+    }
+    int numSamples = buffer.getNumSamples();
     int sampleDeltaToAdd = -samplesPlayed;
     midiMessages.addEvents(midiBuffer, samplesPlayed, numSamples, sampleDeltaToAdd);
     samplesPlayed += numSamples;
@@ -193,8 +194,8 @@ void MidiProcessorSynth_ModuleAudioProcessor::setUsingSampledSound()
         synth.addVoice(new SamplerVoice());    // Voz de tipo Sample
     }
     WavAudioFormat wavFormat;
-    //auto filePath = File::getCurrentWorkingDirectory().getChildFile("../../Media/one-note-nylon-synth-guitar_C.wav");
-    File filePath = "C://Users//juano//Escritorio//TFG//Mi TFG//Bajista-Virtual//MidiProcessorSynth_Module//Media//one-note-nylon-synth-guitar_C.wav";
+    File filePath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/one-note-nylon-synth-guitar_C.wav");
+
     jassert(filePath.existsAsFile());
     std::unique_ptr<InputStream> sample = filePath.createInputStream();
     std::unique_ptr<AudioFormatReader> audioReader(wavFormat.createReaderFor(sample.release(), true));
@@ -221,22 +222,72 @@ void MidiProcessorSynth_ModuleAudioProcessor::readMidi(const juce::File fileName
     midiFile.convertTimestampTicksToSeconds();
 
     numTracks = midiFile.getNumTracks();
+
 }
 
 // Obtiene el track seleccionado, mete los mensajes midi (notas) en un vector
-// y obtiene datos de interes (numero de las notas midi)
+// y obtiene datos de interes (numero de las notas midi y sus timestamps)
 void MidiProcessorSynth_ModuleAudioProcessor::processMidi()
 {
-    const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack);
+    const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
+    currentOffset = (Time::getMillisecondCounterHiRes() - initialOffset) / 1000;
+
     for (int i = 0; i < track->getNumEvents(); i++)
     {
         juce::MidiMessage& msg = track->getEventPointer(i)->message;
         if (msg.isNoteOnOrOff()) {
-            noteTimestamp.push_back(std::pair<int, double>(msg.getNoteNumber(), msg.getTimeStamp()));
+            timestamps.push_back(msg.getTimeStamp() + currentOffset);
+            notesNumber.push_back(msg.getNoteNumber());
             notes.push_back(msg);
         }
     }
 }
+
+//Reinicia los vectores con la informacion del midi y prepara el buffer con los datos necesarios
+void MidiProcessorSynth_ModuleAudioProcessor::loadMidi(int sampleRate) 
+{
+    midiBuffer.clear();
+    notes.clear();
+    timestamps.clear();
+    notesNumber.clear();
+
+    File selectedMidi = MidiTxtPath.loadFileAsString();
+
+    if (selectedMidi.existsAsFile())
+    {
+        readMidi(selectedMidi);
+
+        while (currentTrack->get() == 0) { Thread::sleep(0); }
+
+        processMidi();
+
+        for (int i = 0; i < notes.size(); i++)
+        {
+            MidiMessage note = notes[i];
+            double samplePosition = sampleRate * (note.getTimeStamp() + currentOffset);
+            midiBuffer.addEvent(note, samplePosition);
+        }
+    }
+}
+
+//Devuelve las notas y sus timestamps mediante PInvoke
+extern "C" _declspec(dllexport) void getNotesAndTimestaps(int** noteNumberArray, int* noteNumberSize, double** timestampsArray, int* timestampsSize) {
+
+    *noteNumberSize = notesNumber.size();
+    *noteNumberArray = new int[*noteNumberSize];
+    std::copy(notesNumber.begin(), notesNumber.end(), *noteNumberArray);
+
+    *timestampsSize = timestamps.size();
+    *timestampsArray = new double[*timestampsSize];
+    std::copy(timestamps.begin(), timestamps.end(), *timestampsArray);
+}
+
+//Devuelve num de canales del midi mediante PInvoke
+extern "C" _declspec(dllexport) int getNumTracks() {
+    
+    return numTracks;
+}
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

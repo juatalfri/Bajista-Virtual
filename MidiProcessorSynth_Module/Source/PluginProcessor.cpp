@@ -23,6 +23,7 @@ MidiProcessorSynth_ModuleAudioProcessor::MidiProcessorSynth_ModuleAudioProcessor
     )
 {
     addParameter(midiFileChanged = new AudioParameterFloat("Midi cambiado", "Midi cambiado", 0, 1, 0));
+    addParameter(midiFilePaused = new AudioParameterFloat("Midi pausado", "Midi pausado", 0, 1, 0));
     addParameter(currentTrack = new AudioParameterFloat("Pista seleccionada", "Pista seleccionada", 0, 20, 0));
 }
 
@@ -95,6 +96,8 @@ void MidiProcessorSynth_ModuleAudioProcessor::changeProgramName(int index, const
 //==============================================================================
 void MidiProcessorSynth_ModuleAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
+    initialOffset = Time::getMillisecondCounterHiRes();
+
     setUsingSampledSound();
 
     midiCollector.reset(sampleRate);
@@ -135,15 +138,15 @@ bool MidiProcessorSynth_ModuleAudioProcessor::isBusesLayoutSupported(const Buses
 
 void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    if (initialOffset == 0)
-    {
-        initialOffset = Time::getMillisecondCounterHiRes();
-
-    }
     if (midiFileChanged->get() == 1)
     {
         synth.allNotesOff(0, false);
         loadMidi(getSampleRate());
+    }
+    else if (midiFilePaused->get() == 1)
+    {
+        synth.allNotesOff(0, false);
+        pauseMidi(getSampleRate());
     }
     int numSamples = buffer.getNumSamples();
     int sampleDeltaToAdd = -samplesPlayed;
@@ -227,10 +230,17 @@ void MidiProcessorSynth_ModuleAudioProcessor::readMidi(const juce::File fileName
 
 // Obtiene el track seleccionado, mete los mensajes midi (notas) en un vector
 // y obtiene datos de interes (numero de las notas midi y sus timestamps)
-void MidiProcessorSynth_ModuleAudioProcessor::processMidi()
+void MidiProcessorSynth_ModuleAudioProcessor::processMidi(bool pause)
 {
     const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
-    currentOffset = (Time::getMillisecondCounterHiRes() - initialOffset) / 1000;
+    
+    if (pause) {
+        resumeOffset = Time::getMillisecondCounterHiRes() - initialOffset;
+        currentOffset = (Time::getMillisecondCounterHiRes() - pauseOffset - initialOffset) / 1000;
+    }
+    else {
+        currentOffset = (Time::getMillisecondCounterHiRes() - initialOffset) / 1000;
+    }
 
     for (int i = 0; i < track->getNumEvents(); i++)
     {
@@ -259,7 +269,7 @@ void MidiProcessorSynth_ModuleAudioProcessor::loadMidi(int sampleRate)
 
         while (currentTrack->get() == 0) { Thread::sleep(0); }
 
-        processMidi();
+        processMidi(false);
 
         for (int i = 0; i < notes.size(); i++)
         {
@@ -268,6 +278,28 @@ void MidiProcessorSynth_ModuleAudioProcessor::loadMidi(int sampleRate)
             midiBuffer.addEvent(note, samplePosition);
         }
     }
+}
+
+//Reinicia los vectores con la informacion del midi y prepara el buffer con los datos necesarios
+void MidiProcessorSynth_ModuleAudioProcessor::pauseMidi(int sampleRate)
+{
+    midiBuffer.clear();
+    timestamps.clear();
+    notesNumber.clear();
+
+    pauseOffset = Time::getMillisecondCounterHiRes() - initialOffset;
+
+    while (midiFilePaused->get() == 1) { Thread::sleep(0); }
+
+    processMidi(true);
+
+    for (int i = 0; i < notes.size(); i++)
+    {
+        MidiMessage note = notes[i];
+        double samplePosition = sampleRate * (note.getTimeStamp() + currentOffset);
+        midiBuffer.addEvent(note, samplePosition);
+    }
+    pauseOffset = 0;
 }
 
 //Devuelve las notas y sus timestamps mediante PInvoke

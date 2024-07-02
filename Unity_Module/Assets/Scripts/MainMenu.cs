@@ -26,6 +26,7 @@ public class MainMenu : MonoBehaviour
     int numTracks;
     float selectedTrack = 0; 
     string mediaPath = Application.dataPath + "\\Media";
+    bool isPlaying = false;
 
     private ExtensionFilter[] extensions = new[]
     {
@@ -39,7 +40,26 @@ public class MainMenu : MonoBehaviour
     public void StartAnimation()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (selectedTrack > numTracks & numTracks > 0 )
+        {
+            selectedTrack = numTracks - 1;
+        }
         midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
+        isPlaying = true;
+    }
+
+    public void PauseResume()
+    {
+        if (isPlaying == true)
+        {
+            midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
+            isPlaying = false;
+        }
+        else
+        {
+            midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
+            isPlaying = true;
+        }
 
     }
 
@@ -55,6 +75,7 @@ public class MainMenu : MonoBehaviour
         midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0f);
         File.WriteAllText(mediaPath + "\\Midipath.txt", newMidi[0]);
         playMidi();
+        numTracks = getNumTracks();
         //fillDropdown();
     }
     public void fillDropdown()

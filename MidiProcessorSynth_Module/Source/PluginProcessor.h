@@ -56,8 +56,9 @@ public:
     //==============================================================================
     void setUsingSampledSound();
     void readMidi(File fileName);
-    void processMidi();
+    void processMidi(bool pause);
     void loadMidi(int sampleRate);
+    void pauseMidi(int sampleRate);
 
     //==============================================================================
 private:
@@ -84,12 +85,17 @@ private:
     //Tiempos para cambiar de canción
     double initialOffset = 0;
     double currentOffset = 0;
+    double pauseOffset = 0;
+    double resumeOffset = 0;
 
     //.txt que contiene la ruta del archivo midi
     File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/MidiPath.txt");
 
     //Flag para controlar cambio de archivo midi
     AudioParameterFloat* midiFileChanged;
+
+    //Flag para controlar pausa de archivo midi
+    AudioParameterFloat* midiFilePaused;
 
     //Track seleccionado
     AudioParameterFloat* currentTrack;

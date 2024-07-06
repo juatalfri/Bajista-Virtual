@@ -40,12 +40,15 @@ public class MainMenu : MonoBehaviour
     public void StartAnimation()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        if (selectedTrack > numTracks & numTracks > 0 )
+        if (selectedTrack != 0)
         {
-            selectedTrack = numTracks - 1;
+            if (selectedTrack > numTracks & numTracks > 0)
+            {
+                selectedTrack = numTracks - 1;
+            }
+            midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
+            isPlaying = true;
         }
-        midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
-        isPlaying = true;
     }
 
     public void PauseResume()
@@ -96,8 +99,14 @@ public class MainMenu : MonoBehaviour
 
     public void selectTrackDropdown()
     {
-
-        selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
+        if (trackDropdown.options[trackDropdown.value].text == "-")
+        {
+            selectedTrack = 0;
+        }
+        else
+        {
+            selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
+        }
     }
 
     #endregion

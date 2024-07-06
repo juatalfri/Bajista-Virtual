@@ -55,10 +55,10 @@ public:
 
     //==============================================================================
     void setUsingSampledSound();
-    void readMidi(File fileName);
-    void processMidi(bool pause);
-    void loadMidi(int sampleRate);
-    void pauseMidi(int sampleRate);
+    //void readMidi(File fileName);
+    //void processMidi(int sampleRate);
+    //void loadMidi(int sampleRate);
+    void pauseMidi(bool pause);
 
     //==============================================================================
 private:
@@ -73,23 +73,18 @@ private:
     // El archivo midi a procesar
     juce::MidiFile midiFile;
 
-    // Vector con todos los mensajes midi del archivo
-    std::vector<juce::MidiMessage> notes;
-
     // Buffer con todos los mensajes midi del archivo
     MidiBuffer midiBuffer;
 
     //Notas tocadas
     int samplesPlayed = 0;
 
-    //Tiempos para cambiar de canción
-    double initialOffset = 0;
-    double currentOffset = 0;
-    double pauseOffset = 0;
-    double resumeOffset = 0;
+    //Posición en segundos del processBlock
+    double currentPositionSeconds = 0;
 
     //.txt que contiene la ruta del archivo midi
     File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/MidiPath.txt");
+    //File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("../../Media/MidiPath.txt"); //debug
 
     //Flag para controlar cambio de archivo midi
     AudioParameterFloat* midiFileChanged;

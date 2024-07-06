@@ -23,6 +23,7 @@ MidiProcessorSynth_ModuleAudioProcessor::MidiProcessorSynth_ModuleAudioProcessor
     )
 {
     addParameter(midiFileChanged = new AudioParameterFloat("Midi cambiado", "Midi cambiado", 0, 1, 0));
+    addParameter(midiFilePaused = new AudioParameterFloat("Midi pausado", "Midi pausado", 0, 1, 0));
     addParameter(currentTrack = new AudioParameterFloat("Pista seleccionada", "Pista seleccionada", 0, 20, 0));
 }
 
@@ -135,20 +136,66 @@ bool MidiProcessorSynth_ModuleAudioProcessor::isBusesLayoutSupported(const Buses
 
 void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    if (initialOffset == 0)
-    {
-        initialOffset = Time::getMillisecondCounterHiRes();
-
-    }
     if (midiFileChanged->get() == 1)
     {
         synth.allNotesOff(0, false);
-        loadMidi(getSampleRate());
+
+        //Reinicia los vectores con la informacion del midi y prepara el buffer con los nuevos datos
+        #pragma region Cargar Nuevo Midi
+        
+        midiBuffer.clear();
+        timestamps.clear();
+        notesNumber.clear();
+
+        File selectedMidi = MidiTxtPath.loadFileAsString();
+
+        if (selectedMidi.existsAsFile())
+        {
+            // Lee archivo midi y obtiene el numero de tracks
+            #pragma region Leer Midi
+
+            juce::FileInputStream fileStream(selectedMidi);
+            midiFile.readFrom(fileStream);
+            midiFile.convertTimestampTicksToSeconds();
+
+            numTracks = midiFile.getNumTracks();
+            #pragma endregion
+
+            pauseMidi(false);
+
+            // Obtiene el track seleccionado, mete los mensajes midi (notas) en un vector
+            // y obtiene datos de interes (numero de las notas midi y sus timestamps)
+            #pragma region Procesar Midi
+
+            const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
+            //const juce::MidiMessageSequence* track = midiFile.getTrack(7); //debug
+
+            for (int i = 0; i < track->getNumEvents(); i++)
+            {
+                juce::MidiMessage& msg = track->getEventPointer(i)->message;
+                if (msg.isNoteOnOrOff()) {
+                    timestamps.push_back(msg.getTimeStamp() + currentPositionSeconds);
+                    notesNumber.push_back(msg.getNoteNumber());
+
+                    double samplePosition = getSampleRate() * (msg.getTimeStamp() + currentPositionSeconds);
+                    midiBuffer.addEvent(msg, samplePosition);
+                }
+            }
+            #pragma endregion
+        }
+        #pragma endregion
     }
+    else if (midiFilePaused->get() == 1)
+    {
+        synth.allNotesOff(0, false);
+        pauseMidi(true);
+    }
+
     int numSamples = buffer.getNumSamples();
     int sampleDeltaToAdd = -samplesPlayed;
     midiMessages.addEvents(midiBuffer, samplesPlayed, numSamples, sampleDeltaToAdd);
     samplesPlayed += numSamples;
+    currentPositionSeconds = samplesPlayed / getSampleRate();
 
     midiCollector.removeNextBlockOfMessages(midiMessages, numSamples);
 
@@ -195,6 +242,7 @@ void MidiProcessorSynth_ModuleAudioProcessor::setUsingSampledSound()
     }
     WavAudioFormat wavFormat;
     File filePath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/one-note-nylon-synth-guitar_C.wav");
+    //File filePath = File::getCurrentWorkingDirectory().getChildFile("../../Media/one-note-nylon-synth-guitar_C.wav"); //debug
 
     jassert(filePath.existsAsFile());
     std::unique_ptr<InputStream> sample = filePath.createInputStream();
@@ -214,59 +262,15 @@ void MidiProcessorSynth_ModuleAudioProcessor::setUsingSampledSound()
     ));
 }
 
-// Lee archivo midi y obtiene el numero de tracks
-void MidiProcessorSynth_ModuleAudioProcessor::readMidi(const juce::File fileName)
+//Mantiene al processBlock ocupado para pausar el audio
+void MidiProcessorSynth_ModuleAudioProcessor::pauseMidi(bool pause)
 {
-    juce::FileInputStream fileStream(fileName);
-    midiFile.readFrom(fileStream);
-    midiFile.convertTimestampTicksToSeconds();
-
-    numTracks = midiFile.getNumTracks();
-
-}
-
-// Obtiene el track seleccionado, mete los mensajes midi (notas) en un vector
-// y obtiene datos de interes (numero de las notas midi y sus timestamps)
-void MidiProcessorSynth_ModuleAudioProcessor::processMidi()
-{
-    const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
-    currentOffset = (Time::getMillisecondCounterHiRes() - initialOffset) / 1000;
-
-    for (int i = 0; i < track->getNumEvents(); i++)
+    if (pause)
     {
-        juce::MidiMessage& msg = track->getEventPointer(i)->message;
-        if (msg.isNoteOnOrOff()) {
-            timestamps.push_back(msg.getTimeStamp() + currentOffset);
-            notesNumber.push_back(msg.getNoteNumber());
-            notes.push_back(msg);
-        }
+        while (midiFilePaused->get() == 1) { Thread::sleep(0); }
     }
-}
-
-//Reinicia los vectores con la informacion del midi y prepara el buffer con los datos necesarios
-void MidiProcessorSynth_ModuleAudioProcessor::loadMidi(int sampleRate) 
-{
-    midiBuffer.clear();
-    notes.clear();
-    timestamps.clear();
-    notesNumber.clear();
-
-    File selectedMidi = MidiTxtPath.loadFileAsString();
-
-    if (selectedMidi.existsAsFile())
-    {
-        readMidi(selectedMidi);
-
+    else {
         while (currentTrack->get() == 0) { Thread::sleep(0); }
-
-        processMidi();
-
-        for (int i = 0; i < notes.size(); i++)
-        {
-            MidiMessage note = notes[i];
-            double samplePosition = sampleRate * (note.getTimeStamp() + currentOffset);
-            midiBuffer.addEvent(note, samplePosition);
-        }
     }
 }
 

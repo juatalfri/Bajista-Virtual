@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Runtime.InteropServices;
 using SFB;
-using UnityEngine.UI;
 using System.IO;
 using System;
 using UnityEngine.Audio;
 using System.Threading;
-using TMPro.EditorUtilities;
 
 public class MainMenu : MonoBehaviour
 {
@@ -24,8 +20,8 @@ public class MainMenu : MonoBehaviour
     double[] timestampsArray;
 
     int numTracks;
-    float selectedTrack = 0; 
-    string mediaPath = Application.dataPath + "\\Media";
+    float selectedTrack = 0;
+    string mediaPath = Application.streamingAssetsPath;
     bool isPlaying = false;
 
     private ExtensionFilter[] extensions = new[]
@@ -74,13 +70,13 @@ public class MainMenu : MonoBehaviour
     public void selectMidi()
     {
         string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples", extensions, false);
-        selectedTrackLabel.text = newMidi[0];
+        selectedTrackLabel.text = mediaPath; // newMidi[0];
         midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0f);
         File.WriteAllText(mediaPath + "\\Midipath.txt", newMidi[0]);
         playMidi();
-        numTracks = getNumTracks();
         //fillDropdown();
     }
+
     public void fillDropdown()
     {
         if (trackDropdown.options.Count > 0)
@@ -99,7 +95,7 @@ public class MainMenu : MonoBehaviour
 
     public void selectTrackDropdown()
     {
-        if (trackDropdown.options[trackDropdown.value].text == "-")
+        if (trackDropdown.options[trackDropdown.value].text == "0")
         {
             selectedTrack = 0;
         }
@@ -108,7 +104,6 @@ public class MainMenu : MonoBehaviour
             selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
         }
     }
-
     #endregion
 
     #region Funciones de control del midi
@@ -126,6 +121,28 @@ public class MainMenu : MonoBehaviour
     {
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 0);
     }
+
+    //public void rewindMidi()
+    //{
+    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.3333f);
+    //    Invoke("disableRewindMidi", 0.5f);
+    //}
+
+    //public void forwardMidi()
+    //{
+    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.7777f);
+    //    Invoke("disableForwardMidi", 0.5f);
+    //}
+    //void disableForwardMidi()
+    //{
+    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.5f);
+    //}
+
+    //void disableRewindMidi()
+    //{
+    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.5f);
+    //}
+
     #endregion
 
 

@@ -24,6 +24,7 @@ MidiProcessorSynth_ModuleAudioProcessor::MidiProcessorSynth_ModuleAudioProcessor
 {
     addParameter(midiFileChanged = new AudioParameterFloat("Midi cambiado", "Midi cambiado", 0, 1, 0));
     addParameter(midiFilePaused = new AudioParameterFloat("Midi pausado", "Midi pausado", 0, 1, 0));
+    addParameter(rewindForward = new AudioParameterFloat("RetrocederAvanzar", "RetrocederAvanzar", -50, 50, 0));
     addParameter(currentTrack = new AudioParameterFloat("Pista seleccionada", "Pista seleccionada", 0, 20, 0));
 }
 
@@ -161,7 +162,7 @@ void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<flo
             numTracks = midiFile.getNumTracks();
             #pragma endregion
 
-            pauseMidi(false);
+            pauseMidi(0);
 
             // Obtiene el track seleccionado, mete los mensajes midi (notas) en un vector
             // y obtiene datos de interes (numero de las notas midi y sus timestamps)
@@ -183,12 +184,45 @@ void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<flo
             }
             #pragma endregion
         }
+            else {
+        Beep(500, 500);
+    }
         #pragma endregion
     }
     else if (midiFilePaused->get() == 1)
     {
         synth.allNotesOff(0, false);
-        pauseMidi(true);
+        pauseMidi(1);
+    }
+    else if (rewindForward->get() != 0)
+    {
+        rewindForwardSeconds = rewindForward->get();
+        synth.allNotesOff(0, false);
+
+        //Reinicia los vectores con la informacion del midi y prepara el buffer con los nuevos datos
+        #pragma region Cargar Midi con modificacion de tiempo
+
+        midiBuffer.clear();
+        timestamps.clear();
+        notesNumber.clear();
+
+        pauseMidi(2);
+
+        const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
+        //const juce::MidiMessageSequence* track = midiFile.getTrack(7); //debug
+
+        for (int i = 0; i < track->getNumEvents(); i++)
+        {
+            juce::MidiMessage& msg = track->getEventPointer(i)->message;
+            if (msg.isNoteOnOrOff()) {
+                timestamps.push_back(msg.getTimeStamp() + currentPositionSeconds + rewindForwardSeconds);
+                notesNumber.push_back(msg.getNoteNumber());
+
+                double samplePosition = getSampleRate() * (msg.getTimeStamp() + currentPositionSeconds + rewindForwardSeconds);
+                midiBuffer.addEvent(msg, samplePosition);
+            }
+        }
+        #pragma endregion
     }
 
     int numSamples = buffer.getNumSamples();
@@ -241,36 +275,41 @@ void MidiProcessorSynth_ModuleAudioProcessor::setUsingSampledSound()
         synth.addVoice(new SamplerVoice());    // Voz de tipo Sample
     }
     WavAudioFormat wavFormat;
-    File filePath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/one-note-nylon-synth-guitar_C.wav");
+    File filePath = File::getCurrentWorkingDirectory().getChildFile("./Assets/StreamingAssets/one-note-nylon-synth-guitar_C.wav"); //Unity Editor
+    //File filePath = File::getCurrentWorkingDirectory().getChildFile("./Bajista Virtual_Data/StreamingAssets/one-note-nylon-synth-guitar_C.wav"); //Unity Build
     //File filePath = File::getCurrentWorkingDirectory().getChildFile("../../Media/one-note-nylon-synth-guitar_C.wav"); //debug
 
-    jassert(filePath.existsAsFile());
-    std::unique_ptr<InputStream> sample = filePath.createInputStream();
-    std::unique_ptr<AudioFormatReader> audioReader(wavFormat.createReaderFor(sample.release(), true));
+    if (filePath.existsAsFile()) {
+        std::unique_ptr<InputStream> sample = filePath.createInputStream();
+        std::unique_ptr<AudioFormatReader> audioReader(wavFormat.createReaderFor(sample.release(), true));
 
-    BigInteger allNotes;
-    allNotes.setRange(0, 128, true);
+        BigInteger allNotes;
+        allNotes.setRange(0, 128, true);
 
-    synth.clearSounds();
-    synth.addSound(new SamplerSound("Sample sound",
-        *audioReader,
-        allNotes,
-        72,   // nota midi base
-        0.1,  // ataque de la nota en segundos
-        0.1,  // fade-out en segundos
-        10.0  // longitud maxima de la muestra en segundos
-    ));
+        synth.clearSounds();
+        synth.addSound(new SamplerSound("Sample sound",
+            *audioReader,
+            allNotes,
+            72,   // nota midi base
+            0.1,  // ataque de la nota en segundos
+            0.1,  // fade-out en segundos
+            10.0  // longitud maxima de la muestra en segundos
+        ));
+    }
+    else {
+        Beep(500, 500);
+    }
 }
 
 //Mantiene al processBlock ocupado para pausar el audio
-void MidiProcessorSynth_ModuleAudioProcessor::pauseMidi(bool pause)
+void MidiProcessorSynth_ModuleAudioProcessor::pauseMidi(int type)
 {
-    if (pause)
+    switch (type)
     {
-        while (midiFilePaused->get() == 1) { Thread::sleep(0); }
-    }
-    else {
-        while (currentTrack->get() == 0) { Thread::sleep(0); }
+    case 0: while (currentTrack->get() == 0) { Thread::sleep(0); } break;
+    case 1: while (midiFilePaused->get() == 1) { Thread::sleep(0); } break;
+    case 2: while (rewindForward->get() != 0) { Thread::sleep(0); } break;
+    default: break;
     }
 }
 

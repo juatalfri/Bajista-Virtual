@@ -55,10 +55,7 @@ public:
 
     //==============================================================================
     void setUsingSampledSound();
-    //void readMidi(File fileName);
-    //void processMidi(int sampleRate);
-    //void loadMidi(int sampleRate);
-    void pauseMidi(bool pause);
+    void pauseMidi(int type);
 
     //==============================================================================
 private:
@@ -82,8 +79,12 @@ private:
     //Posición en segundos del processBlock
     double currentPositionSeconds = 0;
 
+    //Segundos que se movera el archivo midi
+    double rewindForwardSeconds = 0;
+
     //.txt que contiene la ruta del archivo midi
-    File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Assets/Media/MidiPath.txt");
+    File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Assets/StreamingAssets/MidiPath.txt"); //Unity Editor
+    //File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Bajista Virtual_Data/StreamingAssets/MidiPath.txt"); //Unity Build
     //File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("../../Media/MidiPath.txt"); //debug
 
     //Flag para controlar cambio de archivo midi
@@ -91,6 +92,9 @@ private:
 
     //Flag para controlar pausa de archivo midi
     AudioParameterFloat* midiFilePaused;
+
+    //Flag para controlar avance o retroceso de archivo midi
+    AudioParameterFloat* rewindForward;
 
     //Track seleccionado
     AudioParameterFloat* currentTrack;

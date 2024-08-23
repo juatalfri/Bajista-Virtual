@@ -55,7 +55,7 @@ public:
 
     //==============================================================================
     void setUsingSampledSound();
-    void pauseMidi(int type);
+    void pauseMidi(String type);
 
     //==============================================================================
 private:
@@ -90,11 +90,14 @@ private:
     //Flag para controlar cambio de archivo midi
     AudioParameterFloat* midiFileChanged;
 
+    //Flag para controlar inicio de archivo midi
+    AudioParameterFloat* midiFileStarted;
+
     //Flag para controlar pausa de archivo midi
     AudioParameterFloat* midiFilePaused;
 
-    //Flag para controlar avance o retroceso de archivo midi
-    AudioParameterFloat* rewindForward;
+    ////Flag para controlar avance o retroceso de archivo midi
+    //AudioParameterFloat* rewindForward;
 
     //Track seleccionado
     AudioParameterFloat* currentTrack;

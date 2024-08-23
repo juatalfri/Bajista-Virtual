@@ -3,94 +3,45 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using SFB;
 using System.IO;
-using System;
 using UnityEngine.Audio;
-using System.Threading;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     #region Definicion de variables
 
     [SerializeField] TextMeshProUGUI selectedTrackLabel;
-    [SerializeField] AudioSource midiAudioSource;
     [SerializeField] AudioMixerGroup midiAudioMixerGroup;
     [SerializeField] TMP_Dropdown trackDropdown;
+    [SerializeField] AudioSource midiAudioSource;
 
-    int[] noteNumberArray;
-    double[] timestampsArray;
-
-    int numTracks;
     float selectedTrack = 0;
     string mediaPath = Application.streamingAssetsPath;
-    bool isPlaying = false;
+    //int numTracks;
 
     private ExtensionFilter[] extensions = new[]
     {
         new ExtensionFilter("Archivos Midi", "mid")
     };
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(midiAudioSource);
+    }
+
     #endregion
 
     #region Funciones del menu
 
-    public void StartAnimation()
-    {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        if (selectedTrack != 0)
-        {
-            if (selectedTrack > numTracks & numTracks > 0)
-            {
-                selectedTrack = numTracks - 1;
-            }
-            midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
-            isPlaying = true;
-        }
-    }
-
-    public void PauseResume()
-    {
-        if (isPlaying == true)
-        {
-            midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
-            isPlaying = false;
-        }
-        else
-        {
-            midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
-            isPlaying = true;
-        }
-
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
-
     public void selectMidi()
     {
-        string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples", extensions, false);
-        selectedTrackLabel.text = mediaPath; // newMidi[0];
+        string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples", 
+            extensions, false);
+        selectedTrackLabel.text = mediaPath;
         midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0f);
         File.WriteAllText(mediaPath + "\\Midipath.txt", newMidi[0]);
         playMidi();
         //fillDropdown();
-    }
-
-    public void fillDropdown()
-    {
-        if (trackDropdown.options.Count > 0)
-        {
-            trackDropdown.options.Clear();
-        }
-
-        Thread.Sleep(200);
-        numTracks = getNumTracks();
-        for (int i = 1; i < numTracks; i++)
-        {
-            trackDropdown.options.Add(new TMP_Dropdown.OptionData() { text = i.ToString() });
-        }
-        trackDropdown.RefreshShownValue();
     }
 
     public void selectTrackDropdown()
@@ -104,6 +55,25 @@ public class MainMenu : MonoBehaviour
             selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
         }
     }
+
+    public void StartAnimation()
+    {
+        if (selectedTrack != 0)
+        {
+            if (selectedTrack > 20/*getNumTracks()*/)
+            {
+                selectedTrack = 1;
+            }
+            midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     #endregion
 
     #region Funciones de control del midi
@@ -113,8 +83,6 @@ public class MainMenu : MonoBehaviour
 
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 1);
         Invoke("restartMidi", 0.5f);
-        //midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
-
     }
 
     void restartMidi()
@@ -122,12 +90,26 @@ public class MainMenu : MonoBehaviour
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 0);
     }
 
+    //public void fillDropdown()
+    //{
+    //    if (trackDropdown.options.Count > 0)
+    //    {
+    //        trackDropdown.options.Clear();
+    //    }
+
+    //    Thread.Sleep(200);
+    //    numTracks = getNumTracks();
+    //    for (int i = 1; i < numTracks; i++)
+    //    {
+    //        trackDropdown.options.Add(new TMP_Dropdown.OptionData() { text = i.ToString() });
+    //    }
+    //    trackDropdown.RefreshShownValue();
+    //}
     //public void rewindMidi()
     //{
     //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.3333f);
     //    Invoke("disableRewindMidi", 0.5f);
     //}
-
     //public void forwardMidi()
     //{
     //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.7777f);
@@ -137,7 +119,6 @@ public class MainMenu : MonoBehaviour
     //{
     //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.5f);
     //}
-
     //void disableRewindMidi()
     //{
     //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.5f);
@@ -145,30 +126,9 @@ public class MainMenu : MonoBehaviour
 
     #endregion
 
-
     #region Funciones PInvoke 
-
-    void loadMidiData()
-    {
-        // Obtener los arrays de los datos
-        IntPtr noteNumberPtr;
-        int noteNumberSize;
-        IntPtr timestampsPtr;
-        int timestampsSize;
-        getNotesAndTimestaps(out noteNumberPtr, out noteNumberSize, out timestampsPtr, out timestampsSize);
-
-        // Convertir los IntPtr a arrays
-        noteNumberArray = new int[noteNumberSize];
-        timestampsArray = new double[timestampsSize];
-        Marshal.Copy(noteNumberPtr, noteNumberArray, 0, noteNumberSize);
-        Marshal.Copy(timestampsPtr, timestampsArray, 0, timestampsSize);
-    }
 
     [DllImport("audioplugin_MidiProcessorSynth_Module.dll")]
     private static extern int getNumTracks();
-
-    [DllImport("audioplugin_MidiProcessorSynth_Module.dll")]
-    private static extern void getNotesAndTimestaps(out IntPtr noteNumberArray, out int noteNumberSize, out IntPtr timestampsArray, out int timestampsSize);
-
     #endregion
 }

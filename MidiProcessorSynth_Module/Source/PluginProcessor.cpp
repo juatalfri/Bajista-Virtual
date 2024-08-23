@@ -22,10 +22,11 @@ MidiProcessorSynth_ModuleAudioProcessor::MidiProcessorSynth_ModuleAudioProcessor
         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
     )
 {
-    addParameter(midiFileChanged = new AudioParameterFloat("Midi cambiado", "Midi cambiado", 0, 1, 0));
-    addParameter(midiFilePaused = new AudioParameterFloat("Midi pausado", "Midi pausado", 0, 1, 0));
-    addParameter(rewindForward = new AudioParameterFloat("RetrocederAvanzar", "RetrocederAvanzar", -50, 50, 0));
-    addParameter(currentTrack = new AudioParameterFloat("Pista seleccionada", "Pista seleccionada", 0, 20, 0));
+    addParameter(midiFileChanged = new AudioParameterFloat("Cambiar Midi", "Cambiar Midi", 0, 1, 0));
+    addParameter(midiFileStarted = new AudioParameterFloat("Iniciar Midi", "Iniciar Midi", 0, 1, 0));
+    addParameter(midiFilePaused = new AudioParameterFloat("Pausar Midi", "Pausar Midi", 0, 1, 0));
+    addParameter(currentTrack = new AudioParameterFloat("Pista Bajo", "Pista Bajo", 0, 20, 0));
+    //addParameter(rewindForward = new AudioParameterFloat("Retroceder Avanzar", "Retroceder Avanzar", -10, 10, 0));
 }
 
 MidiProcessorSynth_ModuleAudioProcessor::~MidiProcessorSynth_ModuleAudioProcessor()
@@ -162,8 +163,7 @@ void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<flo
             numTracks = midiFile.getNumTracks();
             #pragma endregion
 
-            pauseMidi(0);
-
+            pauseMidi("Change");
             // Obtiene el track seleccionado, mete los mensajes midi (notas) en un vector
             // y obtiene datos de interes (numero de las notas midi y sus timestamps)
             #pragma region Procesar Midi
@@ -175,55 +175,53 @@ void MidiProcessorSynth_ModuleAudioProcessor::processBlock(juce::AudioBuffer<flo
             {
                 juce::MidiMessage& msg = track->getEventPointer(i)->message;
                 if (msg.isNoteOnOrOff()) {
-                    timestamps.push_back(msg.getTimeStamp() + currentPositionSeconds);
+                    timestamps.push_back(msg.getTimeStamp());
                     notesNumber.push_back(msg.getNoteNumber());
 
                     double samplePosition = getSampleRate() * (msg.getTimeStamp() + currentPositionSeconds);
                     midiBuffer.addEvent(msg, samplePosition);
                 }
             }
+            pauseMidi("Start");
             #pragma endregion
         }
-            else {
-        Beep(500, 500);
-    }
         #pragma endregion
     }
     else if (midiFilePaused->get() == 1)
     {
         synth.allNotesOff(0, false);
-        pauseMidi(1);
+        pauseMidi("Pause");
     }
-    else if (rewindForward->get() != 0)
-    {
-        rewindForwardSeconds = rewindForward->get();
-        synth.allNotesOff(0, false);
+    //else if (rewindForward->get() != 0)
+    //{
+    //    rewindForwardSeconds = rewindForward->get();
+    //    synth.allNotesOff(0, false);
 
-        //Reinicia los vectores con la informacion del midi y prepara el buffer con los nuevos datos
-        #pragma region Cargar Midi con modificacion de tiempo
+    //    //Reinicia los vectores con la informacion del midi y prepara el buffer con los nuevos datos
+    //    #pragma region Cargar Midi con modificacion de tiempo
 
-        midiBuffer.clear();
-        timestamps.clear();
-        notesNumber.clear();
+    //    midiBuffer.clear();
+    //    timestamps.clear();
+    //    notesNumber.clear();
 
-        pauseMidi(2);
+    //    pauseMidi("RewindForward");
 
-        const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
-        //const juce::MidiMessageSequence* track = midiFile.getTrack(7); //debug
+    //    const juce::MidiMessageSequence* track = midiFile.getTrack(currentTrack->get());
+    //    //const juce::MidiMessageSequence* track = midiFile.getTrack(7); //debug
 
-        for (int i = 0; i < track->getNumEvents(); i++)
-        {
-            juce::MidiMessage& msg = track->getEventPointer(i)->message;
-            if (msg.isNoteOnOrOff()) {
-                timestamps.push_back(msg.getTimeStamp() + currentPositionSeconds + rewindForwardSeconds);
-                notesNumber.push_back(msg.getNoteNumber());
+    //    for (int i = 0; i < track->getNumEvents(); i++)
+    //    {
+    //        juce::MidiMessage& msg = track->getEventPointer(i)->message;
+    //        if (msg.isNoteOnOrOff()) {
+    //            timestamps.push_back(msg.getTimeStamp() + rewindForwardSeconds);
+    //            notesNumber.push_back(msg.getNoteNumber());
 
-                double samplePosition = getSampleRate() * (msg.getTimeStamp() + currentPositionSeconds + rewindForwardSeconds);
-                midiBuffer.addEvent(msg, samplePosition);
-            }
-        }
-        #pragma endregion
-    }
+    //            double samplePosition = getSampleRate() * (msg.getTimeStamp() + currentPositionSeconds + rewindForwardSeconds);
+    //            midiBuffer.addEvent(msg, samplePosition);
+    //        }
+    //    }
+    //    #pragma endregion
+    //}
 
     int numSamples = buffer.getNumSamples();
     int sampleDeltaToAdd = -samplesPlayed;
@@ -302,15 +300,24 @@ void MidiProcessorSynth_ModuleAudioProcessor::setUsingSampledSound()
 }
 
 //Mantiene al processBlock ocupado para pausar el audio
-void MidiProcessorSynth_ModuleAudioProcessor::pauseMidi(int type)
+void MidiProcessorSynth_ModuleAudioProcessor::pauseMidi(String type)
 {
-    switch (type)
+    if (type == "Change")
     {
-    case 0: while (currentTrack->get() == 0) { Thread::sleep(0); } break;
-    case 1: while (midiFilePaused->get() == 1) { Thread::sleep(0); } break;
-    case 2: while (rewindForward->get() != 0) { Thread::sleep(0); } break;
-    default: break;
+        while (currentTrack->get() == 0) { Thread::sleep(0); };
     }
+    else if (type == "Start")
+    {
+        while (midiFileStarted->get() == 0) { Thread::sleep(0); };
+    }
+    else if (type == "Pause")
+    {
+        while (midiFilePaused->get() == 1) { Thread::sleep(0); };
+    }
+    //else if (type == "RewindForward")
+    //{
+    //    while (rewindForward->get() != 0) { Thread::sleep(0); };
+    //}
 }
 
 //Devuelve las notas y sus timestamps mediante PInvoke

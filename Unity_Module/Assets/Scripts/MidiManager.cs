@@ -4,13 +4,16 @@ using UnityEngine.Audio;
 using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
+using TMPro;
 
 public class MidiManager : MonoBehaviour
 {
     #region Definicion de variables
 
+
     public static MidiManager midiManagerInstance;
     public double currentTime = 0;
+    public bool configAnimation = false;
 
     [SerializeField] AudioMixerGroup midiAudioMixerGroup;
     [SerializeField] FretboardNotes[] fretboardNotes;
@@ -20,10 +23,14 @@ public class MidiManager : MonoBehaviour
     bool isPlaying = false;
 
     public int currentHandPosition = 2;
+    public int predominantlyHand;
     public List<int> notesHand1 = new List<int> { 37, 38, 39, 40, 42, 43, 44, 45, 47, 48, 49, 50, 52, 53, 54, 55 };
     public List<int> notesHand2 = new List<int> { 33, 34, 35, 36, 38, 39, 40, 41, 43, 44, 45, 46, 48, 49, 50, 51 };
     public List<int> notesHand3 = new List<int> { 29, 30, 31, 32, 34, 35, 36, 37, 39, 40, 41 ,42, 44, 45, 46, 47 };
-    public int predominantlyHand;
+
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject animationMenu;
+    [SerializeField] TextMeshProUGUI pauseResumeLabel;
 
     #endregion
 
@@ -31,7 +38,6 @@ public class MidiManager : MonoBehaviour
 
     public void PrepareNotes()
     {
-        loadMidiData();
         countNotesPerHand();
 
         foreach (var fretboardNote in fretboardNotes)
@@ -79,6 +85,10 @@ public class MidiManager : MonoBehaviour
 
     public void StartSong()
     {
+        mainMenu.SetActive(false);
+        animationMenu.SetActive(true);
+        CameraManager.cameraManagerInstance.EnableCamera2();
+
         midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 1);
         isPlaying = true;
     }
@@ -87,11 +97,13 @@ public class MidiManager : MonoBehaviour
     {
         if (isPlaying)
         {
+            pauseResumeLabel.text = "Reanudar";
             midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
             isPlaying = false;
         }
         else
         {
+            pauseResumeLabel.text = "Pausar";
             midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
             isPlaying = true;
         }
@@ -99,15 +111,17 @@ public class MidiManager : MonoBehaviour
 
     public void SalirAnimacion()
     {
+        midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
         midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 0);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+
+        SceneManager.LoadScene("Scene");
     }
 
     #endregion
 
     #region Funciones PInvoke 
 
-    void loadMidiData()
+    public void loadMidiData()
     {
         IntPtr noteNumberPtr;
         int noteNumberSize;
@@ -132,11 +146,20 @@ public class MidiManager : MonoBehaviour
     void Start()
     {
         midiManagerInstance = this;
-        PrepareNotes();
     }
 
     private void Update()
     {
+        if (configAnimation && notes.Length == 0)
+        {
+            loadMidiData();
+        }
+        else if (configAnimation && notes.Length > 0)
+        {
+            configAnimation = false;
+            PrepareNotes();
+        }
+        
         if (isPlaying)
         {
             currentTime += Time.deltaTime;

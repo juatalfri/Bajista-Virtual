@@ -29,35 +29,11 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -8484137637020333507}
-  - {fileID: -4476317372018187018}
+  - {fileID: 5387956554882024380}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
---- !u!244 &-4476317372018187018
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: ef9d990b973e83e4c9f547f0ce32c899
-  m_EffectName: audioplugin_MidiProcessorSynth_
-  m_MixLevel: 25dcc085e7bc85047a765c517d5e39bc
-  m_Parameters:
-  - m_ParameterName: Cambiar Midi
-    m_GUID: 546b94b52c553644e9e3858a03266348
-  - m_ParameterName: Iniciar Midi
-    m_GUID: 48aac2176859c0742bf385c8ef6fae7c
-  - m_ParameterName: Pausar Midi
-    m_GUID: fb7818626765f6841ac7711d3e2effc6
-  - m_ParameterName: Retroceder Avan
-    m_GUID: c7052a94789c9034c89a532edcfc652b
-  - m_ParameterName: Pista Bajo
-    m_GUID: 2585ca043ce8a7a40b8c2a3fb04bfe35
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -71,17 +47,21 @@ AudioMixerController:
   - {fileID: 24500006}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -80
-  m_EnableSuspend: 1
+  m_EnableSuspend: 0
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: 546b94b52c553644e9e3858a03266348
+  - guid: ad72b65fae37ff54cb117d65670748ff
     name: CambiarMidi
-  - guid: 48aac2176859c0742bf385c8ef6fae7c
+  - guid: de2dd60488aa1114dad788b08b2f46c7
     name: IniciarMidi
-  - guid: fb7818626765f6841ac7711d3e2effc6
+  - guid: 59c17c38f39e5a94293944a6cd1e1435
     name: PausarMidi
-  - guid: 2585ca043ce8a7a40b8c2a3fb04bfe35
+  - guid: 89b03caacaf846f458de944228d0e108
     name: PistaBajo
+  - guid: 8125f429e010ae743b83dc62722e903d
+    name: CancionCompleta
+  - guid: 1a2637b669d8f3e4795b241caf65f66d
+    name: Velocidad
   m_AudioMixerGroupViews:
   - guids:
     - 0304029b1a8fa684ab601303d90dd9ed
@@ -144,15 +124,20 @@ AudioMixerSnapshotController:
     86a1d96299cf22746919d5b794ae3bef: 0
     39cacb82a41d5734894d76be4399073c: 0
     787f6592bb07ae640b6342223d8861f8: 1
+    ba495de26ed269f4aba30abe23289e1c: 0
     aedc3fe2efd65914d9e158b859d53746: 0
     380ed7735d5e8fe48acd36ae047cb856: 0
+    b86a9f83ece21da45a5a29a6a6752cd9: 0
     bcb195046587eca49b228714ec0fcb18: 1
+    de2dd60488aa1114dad788b08b2f46c7: 0
     2585ca043ce8a7a40b8c2a3fb04bfe35: 0
     7901c6341312e124ca1608590c4b216f: 9.211
     dce364a41f650b04b888c57d1bea6c40: 6
     42cfa6a4f0ed47945a66ff58d68b8bc5: 0
     546b94b52c553644e9e3858a03266348: 0
     f3cabbe56b4b06848a9b508ca4c52384: 50
+    b2ee668640937fc4aafa59687ad05c22: 0
+    1a2637b669d8f3e4795b241caf65f66d: 1
     48aac2176859c0742bf385c8ef6fae7c: 0
     3896f427d08e9b1429ea2ad9d72c5906: 1
     4c6984479ceb2964fae7976f56a7bcbf: 0
@@ -160,26 +145,32 @@ AudioMixerSnapshotController:
     a89549b7ffc8acc489256aad1f25887a: 0
     2807cdd734beb1f4f8b70b59c60956c8: 0.139
     bdea5d08d52fa3841b17b75c1b2d2f52: 0.5
+    59c17c38f39e5a94293944a6cd1e1435: 0
     0ed47068cacb0e54a839fcadf2ad7ad7: 1
     9b354998e7458464dbbecb4ec672ed04: 0
     2d8411a8b369e5d4894fa8e2ec804a33: 10
     30422da8708a15646a14a973953856f6: 9.95
+    b2a7cdb850c8ec746ba8bb2a02866a4c: 0
     441352e8e3e2d9243aafe115b831a223: 0
+    8125f429e010ae743b83dc62722e903d: 0
     f35db579f6f46cb49a716eb26ee45f35: 0
     275b0bd9fc1a4cc4392dc10a4888d7ef: 0
     a641ff2a0ffda454da13bcedd2eafeab: 0.15
     4ca2da8aeef4b944694296c5e979b026: 10
+    4f715f9a2423a294e9bf87cbb8b28f90: 0
     89e9e5aaae08bc647959933b2b7cf1cd: 10
+    89b03caacaf846f458de944228d0e108: 0
     468443da88971a34096c5082ab62f63e: 0.15
     3e091f7bb0124ae4c83093e5a7ee36a9: 2
     6763d6dbc0ffc9840a5a37e133ddf356: 0
-    6ac697eb0016a744e8402343f780ed10: 0
+    6ac697eb0016a744e8402343f780ed10: 2
     45bfb0fb1dd96564095e9a6dc79cb5e4: 0
     6ef7631c4f3e3ec4b9281696e260bdd3: 0.35
     a036490de0762d54e9f608c9f51589ab: 0
     7c67972d081f0584e9e939637f32a84f: 0.35
     36d31d3d67f728e439fa1c1c2b49d942: 0
-    e887888d0d2e0df4f9c6aba9dbaad4ed: 0
+    0112ec4dee0ce9e4e874567fa8d34aa5: 0.1
+    e887888d0d2e0df4f9c6aba9dbaad4ed: 0.35
     ba2bb19d8771d04499996d04a13d399b: 0.5
     3f7fbefd776d01f4da62212aae642f23: -10
     6b78554eaaed43f4da5d1b85a86d54ad: 0.1
@@ -187,6 +178,34 @@ AudioMixerSnapshotController:
     94041abe50a6e144cb0f45af7575464a: 0.5
     acb1b5eefbdb01640a9ad1c5993fb34f: 1
     7b2bda2fc9503f24997ec8a82d7d0172: 0
+    ad72b65fae37ff54cb117d65670748ff: 0
     aa03f85f420c7134b90c4e084493b201: 10
+    421751ff3faa8f64f991db079e4fcf9d: 0
     b20ccbffc562a3440a2e690778d7b757: 0.1
   m_TransitionOverrides: {}
+--- !u!244 &5387956554882024380
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 6b8020c9d65951b45bc049c549cca901
+  m_EffectName: audioplugin_MidiProcessorSynth_
+  m_MixLevel: 7b0fa4ece5d75684d9245892c9045c41
+  m_Parameters:
+  - m_ParameterName: Cambiar Midi
+    m_GUID: ad72b65fae37ff54cb117d65670748ff
+  - m_ParameterName: Iniciar Midi
+    m_GUID: de2dd60488aa1114dad788b08b2f46c7
+  - m_ParameterName: Pausar Midi
+    m_GUID: 59c17c38f39e5a94293944a6cd1e1435
+  - m_ParameterName: Pista Bajo
+    m_GUID: 89b03caacaf846f458de944228d0e108
+  - m_ParameterName: Cancion complet
+    m_GUID: 8125f429e010ae743b83dc62722e903d
+  - m_ParameterName: Velocidad
+    m_GUID: 1a2637b669d8f3e4795b241caf65f66d
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

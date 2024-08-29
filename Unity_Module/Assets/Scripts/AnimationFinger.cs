@@ -23,11 +23,7 @@ public class AnimationFinger :  MonoBehaviour
 
     public void moveFingerUp(Quaternion rotationFinger2, Quaternion rotationFinger3, Quaternion rotationFinger4, 
         double currentTimestamp, double nextTimestamp)
-    {
-            //defaultFinger2Rotation = finger2.localRotation;
-            //defaultFinger3Rotation = finger3.localRotation;
-            //defaultFinger4Rotation = finger4.localRotation;
-            
+    {        
             finger2.localRotation = rotationFinger2;
             finger3.localRotation = rotationFinger3;
             finger4.localRotation = rotationFinger4; 
@@ -37,20 +33,16 @@ public class AnimationFinger :  MonoBehaviour
 
     public void moveFingerDown(double currentTimestamp, double nextTimestamp)
     {
-        //if ((nextTimestamp - currentTimestamp) < 0.07)
-        //{
-        //    finger2.localRotation = defaultFinger2Rotation;
-        //    finger3.localRotation = defaultFinger3Rotation;
-        //    finger4.localRotation = defaultFinger4Rotation;
-        //}
-        //else
-        //{
-        //    StartCoroutine(SlerpPosition(0.07));
-        //}
-
-        finger2.localRotation = defaultFinger2Rotation;
-        finger3.localRotation = defaultFinger3Rotation;
-        finger4.localRotation = defaultFinger4Rotation;
+        if ((nextTimestamp - currentTimestamp) < 0.1)
+        {
+            finger2.localRotation = defaultFinger2Rotation;
+            finger3.localRotation = defaultFinger3Rotation;
+            finger4.localRotation = defaultFinger4Rotation;
+        }
+        else
+        {
+            StartCoroutine(SlerpPosition(0.08));
+        }
 
         active = false;
     }
@@ -62,11 +54,11 @@ public class AnimationFinger :  MonoBehaviour
         while (timeElapesd < slerpDuration)
         {
             finger2.localRotation = Quaternion.Slerp(finger2.localRotation, defaultFinger2Rotation,
-                (float)(timeElapesd / (slerpDuration - 0.03)));
+                (float)(timeElapesd / (slerpDuration - 0.04)));
             finger3.localRotation = Quaternion.Slerp(finger3.localRotation, defaultFinger3Rotation,
                 (float)(timeElapesd / (slerpDuration - 0.02)));
             finger4.localRotation = Quaternion.Slerp(finger4.localRotation, defaultFinger4Rotation,
-                (float)(timeElapesd / (slerpDuration - 0.01)));
+                (float)(timeElapesd / slerpDuration));
 
             timeElapesd += Time.deltaTime;
             yield return null;

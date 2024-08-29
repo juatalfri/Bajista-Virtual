@@ -5,19 +5,19 @@ using SFB;
 using System.IO;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     #region Definicion de variables
 
-    [SerializeField] TextMeshProUGUI selectedTrackLabel;
     [SerializeField] AudioMixerGroup midiAudioMixerGroup;
     [SerializeField] TMP_Dropdown trackDropdown;
+    [SerializeField] Toggle trackMode;
     [SerializeField] AudioSource midiAudioSource;
 
     float selectedTrack = 0;
     string mediaPath = Application.streamingAssetsPath;
-    //int numTracks;
 
     private ExtensionFilter[] extensions = new[]
     {
@@ -35,37 +35,24 @@ public class MainMenu : MonoBehaviour
 
     public void selectMidi()
     {
-        string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples", 
+        string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples",
             extensions, false);
-        selectedTrackLabel.text = mediaPath;
         midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0f);
         File.WriteAllText(mediaPath + "\\Midipath.txt", newMidi[0]);
         playMidi();
-        //fillDropdown();
     }
 
     public void selectTrackDropdown()
     {
-        if (trackDropdown.options[trackDropdown.value].text == "0")
-        {
-            selectedTrack = 0;
-        }
-        else
-        {
-            selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
-        }
+        selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
     }
 
     public void StartAnimation()
     {
         if (selectedTrack != 0)
         {
-            if (selectedTrack > 20/*getNumTracks()*/)
-            {
-                selectedTrack = 1;
-            }
             midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            MidiManager.midiManagerInstance.configAnimation = true;
         }
     }
 
@@ -80,6 +67,7 @@ public class MainMenu : MonoBehaviour
     public void playMidi()
     {
         midiAudioSource.Play();
+        midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
 
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 1);
         Invoke("restartMidi", 0.5f);
@@ -90,21 +78,18 @@ public class MainMenu : MonoBehaviour
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 0);
     }
 
-    //public void fillDropdown()
-    //{
-    //    if (trackDropdown.options.Count > 0)
-    //    {
-    //        trackDropdown.options.Clear();
-    //    }
+    public void selectAllTracks()
+    {
+        if (trackMode.isOn)
+        {
+            midiAudioMixerGroup.audioMixer.SetFloat("CancionCompleta", 1);
+        }
+        else
+        {
+            midiAudioMixerGroup.audioMixer.SetFloat("CancionCompleta", 0);
+        }
+    }
 
-    //    Thread.Sleep(200);
-    //    numTracks = getNumTracks();
-    //    for (int i = 1; i < numTracks; i++)
-    //    {
-    //        trackDropdown.options.Add(new TMP_Dropdown.OptionData() { text = i.ToString() });
-    //    }
-    //    trackDropdown.RefreshShownValue();
-    //}
     //public void rewindMidi()
     //{
     //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.3333f);

@@ -24,6 +24,7 @@ public class MidiManager : MonoBehaviour
 
     public int currentHandPosition = 2;
     public int predominantlyHand;
+    public List<int> notesHand4 = new List<int> { 41, 42, 43, 44, 46, 47, 48, 49, 51, 52, 53, 54, 56, 57, 58, 59 };
     public List<int> notesHand1 = new List<int> { 37, 38, 39, 40, 42, 43, 44, 45, 47, 48, 49, 50, 52, 53, 54, 55 };
     public List<int> notesHand2 = new List<int> { 33, 34, 35, 36, 38, 39, 40, 41, 43, 44, 45, 46, 48, 49, 50, 51 };
     public List<int> notesHand3 = new List<int> { 29, 30, 31, 32, 34, 35, 36, 37, 39, 40, 41 ,42, 44, 45, 46, 47 };
@@ -53,6 +54,7 @@ public class MidiManager : MonoBehaviour
         int countHand1 = 0;
         int countHand2 = 0;
         int countHand3 = 0;
+
         foreach (int note in notes)
         {
             if (notesHand1.Contains(note))
@@ -98,12 +100,14 @@ public class MidiManager : MonoBehaviour
         if (isPlaying)
         {
             pauseResumeLabel.text = "Reanudar";
+            midiAudioMixerGroup.audioMixer.SetFloat("Volumen", -80);
             midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
             isPlaying = false;
         }
         else
         {
             pauseResumeLabel.text = "Pausar";
+            midiAudioMixerGroup.audioMixer.SetFloat("Volumen", 0);
             midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
             isPlaying = true;
         }
@@ -111,7 +115,7 @@ public class MidiManager : MonoBehaviour
 
     public void SalirAnimacion()
     {
-        midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
+        midiAudioMixerGroup.audioMixer.SetFloat("Volumen", -80);
         midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 0);
 
         SceneManager.LoadScene("Scene");

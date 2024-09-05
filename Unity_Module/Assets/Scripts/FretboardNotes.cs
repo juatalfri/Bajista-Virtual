@@ -15,6 +15,8 @@ public class FretboardNotes : MonoBehaviour
     [SerializeField] Quaternion rotationFinger3;
     [SerializeField] Quaternion rotationFinger2;
 
+    [SerializeField] GameObject freeNote;
+
     int index = 0;
 
     #endregion
@@ -40,12 +42,20 @@ public class FretboardNotes : MonoBehaviour
         {
             AnimationHand animationHand = FindObjectOfType<AnimationHand>();
             AnimationFinger[] animationFingers = FindObjectsOfType<AnimationFinger>();
-            foreach (AnimationFinger animationFinger in animationFingers)
+            if (freeNote != null)
             {
-                if (animationFinger.gameObject.name == finger.name)
+                animationHand.moveHand(notePrefab, noteNumber, handPosition, rotationFinger2,
+                    rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote);
+            }
+            else
+            {
+                foreach (AnimationFinger animationFinger in animationFingers)
                 {
-                    animationHand.moveHand(noteNumber, handPosition, animationFinger, rotationFinger2, 
-                        rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1);
+                    if (animationFinger.gameObject.name == finger.name)
+                    {
+                        animationHand.moveHand(notePrefab, noteNumber, handPosition, rotationFinger2,
+                            rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote, animationFinger);
+                    }
                 }
             }
             index++;

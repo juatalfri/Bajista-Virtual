@@ -67,7 +67,7 @@ public class MainMenu : MonoBehaviour
     public void playMidi()
     {
         midiAudioSource.Play();
-        midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
+        midiAudioMixerGroup.audioMixer.SetFloat("Volumen", 0);
 
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 1);
         Invoke("restartMidi", 0.5f);

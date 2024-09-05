@@ -41,13 +41,13 @@ public class AnimationFinger :  MonoBehaviour
         }
         else
         {
-            StartCoroutine(SlerpPosition(0.08));
+            StartCoroutine(SlerpRotation(0.08));
         }
 
         active = false;
     }
 
-    IEnumerator SlerpPosition(double slerpDuration)
+    IEnumerator SlerpRotation(double slerpDuration)
     {
         double timeElapesd = 0;
 

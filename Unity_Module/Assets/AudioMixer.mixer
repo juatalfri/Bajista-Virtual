@@ -1,25 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!244 &-9024525318447742175
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 6a2fa65e2cc93ec4bb85bf8cea9696cf
-  m_EffectName: audioplugin_MidiProcessorSynth_
-  m_MixLevel: 5c924e29c32c3f24eb1c522bbefa51fe
-  m_Parameters:
-  - m_ParameterName: Midi cambiado
-    m_GUID: 1ce73b55acd62394597e2701bdefb32b
-  - m_ParameterName: Midi pausado
-    m_GUID: aa367437a12f211488c957fa4345476b
-  - m_ParameterName: Pista seleccion
-    m_GUID: 1b1e5c00ac9773e4ab419c829c0ad548
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!244 &-8484137637020333507
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -49,11 +29,39 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -8484137637020333507}
-  - {fileID: -9024525318447742175}
+  - {fileID: 1108625209981981188}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-445484882579488480
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 23a9ee1b7ad41aa42abc812107989c47
+  m_EffectName: Duck Volume
+  m_MixLevel: 1f4852c823c14e146adaddfcb7868577
+  m_Parameters:
+  - m_ParameterName: Threshold
+    m_GUID: 9b5c92a94cbb11e47b7257833bd150e9
+  - m_ParameterName: Ratio
+    m_GUID: 80f196fe5b8da7d429f1421f56f547e8
+  - m_ParameterName: Attack Time
+    m_GUID: c8f44a34fbb995746a165cc7efe5f519
+  - m_ParameterName: Release Time
+    m_GUID: c2ff3fb648098da49aa697e529c88fe9
+  - m_ParameterName: Make-up Gain
+    m_GUID: e1596c62885cc36438514f9ba6ca3c7f
+  - m_ParameterName: Knee
+    m_GUID: 3923046a1955701499b1984992122ee4
+  - m_ParameterName: Sidechain Mix
+    m_GUID: cd91d1eacf8844941a0cb985c2fd7c8f
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -70,12 +78,18 @@ AudioMixerController:
   m_EnableSuspend: 0
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: 1ce73b55acd62394597e2701bdefb32b
-    name: CambiarMidi
-  - guid: aa367437a12f211488c957fa4345476b
+  - guid: 967a6fd4b5b26964086e3e0b63d645e4
+    name: IniciarMidi
+  - guid: 587f48cb63fc99847bc11b57ceaad2f1
     name: PausarMidi
-  - guid: 1b1e5c00ac9773e4ab419c829c0ad548
+  - guid: 159fda2cb594dee41a92c7203d97c81d
+    name: FinalizarMidi
+  - guid: ce2815368712b01458c3a5097e51ce9c
     name: PistaBajo
+  - guid: 4d02289aa806d3849ac87160d7a69eab
+    name: CancionCompleta
+  - guid: 7f6111dca1ae94144bcb48fea4d64b49
+    name: Velocidad
   m_AudioMixerGroupViews:
   - guids:
     - 0304029b1a8fa684ab601303d90dd9ed
@@ -129,43 +143,132 @@ AudioMixerSnapshotController:
   m_FloatValues:
     59aee620e7e3aab44b0dbaf6a84fe179: 0
     f1f17820be559fd45a85624f230d968a: 1
+    86804a30c6ca2fd4f8719118271ae381: 0
     2a1a2db0ef171ce44a08254040efddb6: 0.35
+    b361a5e080aa6d141b8b8a7bef73d3dc: 2
     18fa13f09445aef4498ebd9d0b217ffb: 0
     0e0c35c1e8536f34ca3e4ba16c520fd9: 0
     12815fe12084e29478a338cfa7bf3d4f: -80
+    fb7818626765f6841ac7711d3e2effc6: 0
     86a1d96299cf22746919d5b794ae3bef: 0
     39cacb82a41d5734894d76be4399073c: 0
+    14bdb49295d277940a27937c0e21dff6: 10
     787f6592bb07ae640b6342223d8861f8: 1
+    ba495de26ed269f4aba30abe23289e1c: 0
+    aedc3fe2efd65914d9e158b859d53746: 0
     380ed7735d5e8fe48acd36ae047cb856: 0
+    b86a9f83ece21da45a5a29a6a6752cd9: 0
     bcb195046587eca49b228714ec0fcb18: 1
+    de2dd60488aa1114dad788b08b2f46c7: 0
+    2585ca043ce8a7a40b8c2a3fb04bfe35: 0
     7901c6341312e124ca1608590c4b216f: 9.211
     dce364a41f650b04b888c57d1bea6c40: 6
     42cfa6a4f0ed47945a66ff58d68b8bc5: 0
+    546b94b52c553644e9e3858a03266348: 0
     f3cabbe56b4b06848a9b508ca4c52384: 50
+    cca1931615c99894bae7b2322a5d8b12: 0
+    bee4c65625286ee49b13ec0369d22393: -10
+    b2ee668640937fc4aafa59687ad05c22: 0
+    1a2637b669d8f3e4795b241caf65f66d: 1
+    48aac2176859c0742bf385c8ef6fae7c: 0
+    3896f427d08e9b1429ea2ad9d72c5906: 1
+    4c6984479ceb2964fae7976f56a7bcbf: 0
     7bf2238719738c74faa45f0158fdc1db: 0
     a89549b7ffc8acc489256aad1f25887a: 0
     2807cdd734beb1f4f8b70b59c60956c8: 0.139
+    bdea5d08d52fa3841b17b75c1b2d2f52: 0.5
+    59c17c38f39e5a94293944a6cd1e1435: 0
     0ed47068cacb0e54a839fcadf2ad7ad7: 1
+    24c47078da4ece94fae3b90b3367d57a: 0.1
     9b354998e7458464dbbecb4ec672ed04: 0
     2d8411a8b369e5d4894fa8e2ec804a33: 10
     30422da8708a15646a14a973953856f6: 9.95
+    b2a7cdb850c8ec746ba8bb2a02866a4c: 0
     441352e8e3e2d9243aafe115b831a223: 0
+    8125f429e010ae743b83dc62722e903d: 0
+    f35db579f6f46cb49a716eb26ee45f35: 0
     275b0bd9fc1a4cc4392dc10a4888d7ef: 0
     a641ff2a0ffda454da13bcedd2eafeab: 0.15
     4ca2da8aeef4b944694296c5e979b026: 10
+    4f715f9a2423a294e9bf87cbb8b28f90: 0
     89e9e5aaae08bc647959933b2b7cf1cd: 10
+    89b03caacaf846f458de944228d0e108: 0
     468443da88971a34096c5082ab62f63e: 0.15
     3e091f7bb0124ae4c83093e5a7ee36a9: 2
     6763d6dbc0ffc9840a5a37e133ddf356: 0
+    6ac697eb0016a744e8402343f780ed10: 2
+    45bfb0fb1dd96564095e9a6dc79cb5e4: 0
     6ef7631c4f3e3ec4b9281696e260bdd3: 0.35
+    a1ca5d7c892790d4fbd078befabec2dc: 1
     a036490de0762d54e9f608c9f51589ab: 0
     7c67972d081f0584e9e939637f32a84f: 0.35
     36d31d3d67f728e439fa1c1c2b49d942: 0
-    e887888d0d2e0df4f9c6aba9dbaad4ed: 0
+    0112ec4dee0ce9e4e874567fa8d34aa5: 0.1
+    e887888d0d2e0df4f9c6aba9dbaad4ed: 0.35
+    ba2bb19d8771d04499996d04a13d399b: 0.5
     3f7fbefd776d01f4da62212aae642f23: -10
     6b78554eaaed43f4da5d1b85a86d54ad: 0.1
     448309be47e51614aa9af10184965532: -80
+    94041abe50a6e144cb0f45af7575464a: 0.5
     acb1b5eefbdb01640a9ad1c5993fb34f: 1
+    7b2bda2fc9503f24997ec8a82d7d0172: 0
+    ad72b65fae37ff54cb117d65670748ff: 0
     aa03f85f420c7134b90c4e084493b201: 10
+    421751ff3faa8f64f991db079e4fcf9d: 0
+    6e61abfff9af3f44889b95619f35af5d: 0.1
     b20ccbffc562a3440a2e690778d7b757: 0.1
   m_TransitionOverrides: {}
+--- !u!244 &1108625209981981188
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 63674010f92c681498c77e57565aa7bf
+  m_EffectName: audioplugin_MidiProcessorSynth_
+  m_MixLevel: 9344e34ed54e99643a8fd762c2aba181
+  m_Parameters:
+  - m_ParameterName: Iniciar Midi
+    m_GUID: 967a6fd4b5b26964086e3e0b63d645e4
+  - m_ParameterName: Pausar Midi
+    m_GUID: 587f48cb63fc99847bc11b57ceaad2f1
+  - m_ParameterName: Finalizar Midi
+    m_GUID: 159fda2cb594dee41a92c7203d97c81d
+  - m_ParameterName: Pista Bajo
+    m_GUID: ce2815368712b01458c3a5097e51ce9c
+  - m_ParameterName: Cancion complet
+    m_GUID: 4d02289aa806d3849ac87160d7a69eab
+  - m_ParameterName: Velocidad
+    m_GUID: 7f6111dca1ae94144bcb48fea4d64b49
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &2865623084574325833
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: a13b1b58823dfc44d8d4c047cc95b664
+  m_EffectName: Duck Volume
+  m_MixLevel: e8aa662d97d0060419bf8d2e6eff2c4b
+  m_Parameters:
+  - m_ParameterName: Threshold
+    m_GUID: 200e469f973df8449813db6d75279f16
+  - m_ParameterName: Ratio
+    m_GUID: 70549668f647a224fbc5faf3f3ac66a9
+  - m_ParameterName: Attack Time
+    m_GUID: b69eeeb2849a61146ade9ae16fd2fe00
+  - m_ParameterName: Release Time
+    m_GUID: 981d4584965ec844dad04b8a1209bb75
+  - m_ParameterName: Make-up Gain
+    m_GUID: 8438c970ddc23b64d95e18cf6391b73c
+  - m_ParameterName: Knee
+    m_GUID: 21da81f44a770a5499e7ca723b9b5c93
+  - m_ParameterName: Sidechain Mix
+    m_GUID: c5838b6c3bac421418176cc39bde97f4
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0

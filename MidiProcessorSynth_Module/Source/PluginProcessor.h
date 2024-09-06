@@ -55,7 +55,8 @@ public:
 
     //==============================================================================
     void setUsingSampledSound();
-    void pauseMidi(String type);
+    void loadMidiData();
+    void waitForAnimation();
 
     //==============================================================================
 private:
@@ -79,19 +80,27 @@ private:
     //Posición en segundos del processBlock
     double currentPositionSeconds = 0;
 
+    //Segundos que lleva sonando el midi
+    double pauseSeconds = 0;
+
+    //Segundos pasados desde el inicio de la canción
+    double resumeSeconds = 0;
+
+    bool paused = false;
+
     //.txt que contiene la ruta del archivo midi
     File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Assets/StreamingAssets/MidiPath.txt"); //Unity Editor
     //File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("./Bajista Virtual_Data/StreamingAssets/MidiPath.txt"); //Unity Build
     //File MidiTxtPath = File::getCurrentWorkingDirectory().getChildFile("../../Media/MidiPath.txt"); //debug
-
-    //Flag para controlar cambio de archivo midi
-    AudioParameterFloat* midiFileChanged;
 
     //Flag para controlar inicio de archivo midi
     AudioParameterFloat* midiFileStarted;
 
     //Flag para controlar pausa de archivo midi
     AudioParameterFloat* midiFilePaused;
+
+    //Flag para controlar fin de archivo midi
+    AudioParameterFloat* midiFileEnded;
 
     //Flag para controlar si suenan todas las pistas o solo la del bajo
     AudioParameterFloat* selectAllTracks;

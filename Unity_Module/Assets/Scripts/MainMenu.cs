@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Toggle trackMode;
     [SerializeField] AudioSource midiAudioSource;
 
+    bool midiSelected = false;
     float selectedTrack = 0;
     string mediaPath = Application.streamingAssetsPath;
 
@@ -23,11 +24,6 @@ public class MainMenu : MonoBehaviour
     {
         new ExtensionFilter("Archivos Midi", "mid")
     };
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(midiAudioSource);
-    }
 
     #endregion
 
@@ -37,22 +33,27 @@ public class MainMenu : MonoBehaviour
     {
         string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples",
             extensions, false);
-        midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0f);
         File.WriteAllText(mediaPath + "\\Midipath.txt", newMidi[0]);
-        playMidi();
+        midiSelected = true;
     }
 
     public void selectTrackDropdown()
     {
         selectedTrack = float.Parse(trackDropdown.options[trackDropdown.value].text);
+        midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
     }
 
     public void StartAnimation()
     {
-        if (selectedTrack != 0)
+        if (selectedTrack != 0 && midiSelected)
         {
-            midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", selectedTrack / 20f);
+            midiAudioSource.Play();
+
+            midiAudioMixerGroup.audioMixer.SetFloat("FinalizarMidi", 0);
+            midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 1);
+ 
             MidiManager.midiManagerInstance.configAnimation = true;
+            //Invoke("restartMidi", 0.5f);
         }
     }
 
@@ -64,18 +65,11 @@ public class MainMenu : MonoBehaviour
     #endregion
 
     #region Funciones de control del midi
-    public void playMidi()
-    {
-        midiAudioSource.Play();
-        midiAudioMixerGroup.audioMixer.SetFloat("Volumen", 0);
-
-        midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 1);
-        Invoke("restartMidi", 0.5f);
-    }
 
     void restartMidi()
     {
         midiAudioMixerGroup.audioMixer.SetFloat("CambiarMidi", 0);
+
     }
 
     public void selectAllTracks()
@@ -90,30 +84,5 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    //public void rewindMidi()
-    //{
-    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.3333f);
-    //    Invoke("disableRewindMidi", 0.5f);
-    //}
-    //public void forwardMidi()
-    //{
-    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.7777f);
-    //    Invoke("disableForwardMidi", 0.5f);
-    //}
-    //void disableForwardMidi()
-    //{
-    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.5f);
-    //}
-    //void disableRewindMidi()
-    //{
-    //    midiAudioMixerGroup.audioMixer.SetFloat("RetrocederAvanzar", 0.5f);
-    //}
-
-    #endregion
-
-    #region Funciones PInvoke 
-
-    [DllImport("audioplugin_MidiProcessorSynth_Module.dll")]
-    private static extern int getNumTracks();
     #endregion
 }

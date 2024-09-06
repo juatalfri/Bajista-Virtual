@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
 using TMPro;
+using System.Threading;
 
 public class MidiManager : MonoBehaviour
 {
@@ -91,7 +92,7 @@ public class MidiManager : MonoBehaviour
         animationMenu.SetActive(true);
         CameraManager.cameraManagerInstance.EnableCamera2();
 
-        midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 1);
+        midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 0);
         isPlaying = true;
     }
 
@@ -100,14 +101,12 @@ public class MidiManager : MonoBehaviour
         if (isPlaying)
         {
             pauseResumeLabel.text = "Reanudar";
-            midiAudioMixerGroup.audioMixer.SetFloat("Volumen", -80);
             midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 1);
             isPlaying = false;
         }
         else
         {
             pauseResumeLabel.text = "Pausar";
-            midiAudioMixerGroup.audioMixer.SetFloat("Volumen", 0);
             midiAudioMixerGroup.audioMixer.SetFloat("PausarMidi", 0);
             isPlaying = true;
         }
@@ -115,10 +114,11 @@ public class MidiManager : MonoBehaviour
 
     public void SalirAnimacion()
     {
-        midiAudioMixerGroup.audioMixer.SetFloat("Volumen", -80);
-        midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 0);
+        //midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 0);
+        midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0);
+        midiAudioMixerGroup.audioMixer.SetFloat("FinalizarMidi", 1);
 
-        SceneManager.LoadScene("Scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     #endregion

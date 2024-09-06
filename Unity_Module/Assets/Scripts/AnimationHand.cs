@@ -41,7 +41,6 @@ public class AnimationHand :  MonoBehaviour
         Quaternion rotationFinger3, Quaternion rotationFinger4, double currentTimestamp, double nextTimestamp,
         GameObject freeNote = null, AnimationFinger animationFinger = null)
     {
-        bool inHand4 = MidiManager.midiManagerInstance.notesHand4.Contains(note);
         bool inHand1 = MidiManager.midiManagerInstance.notesHand1.Contains(note);
         bool inHand2 = MidiManager.midiManagerInstance.notesHand2.Contains(note);
         bool inHand3 = MidiManager.midiManagerInstance.notesHand3.Contains(note);
@@ -49,7 +48,7 @@ public class AnimationHand :  MonoBehaviour
         switch (handPositionNote)
         {
             case 0:
-                if (!inHand4 && !inHand1 && !inHand2 && !inHand3)
+                if (!inHand1 && !inHand2 && !inHand3)
                 {
                     if (freeNote.GetComponent<MeshRenderer>().material.color == standardNote.color)
                     {
@@ -79,8 +78,7 @@ public class AnimationHand :  MonoBehaviour
                             StartCoroutine(SlerpPosition(0.03, handPosition4));
                         }
                         movePick(notePrefab);
-                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                            currentTimestamp, nextTimestamp);
+                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                         MidiManager.midiManagerInstance.currentHandPosition = 4;
                     }
                 }
@@ -96,8 +94,7 @@ public class AnimationHand :  MonoBehaviour
                     if (handPositionNote == MidiManager.midiManagerInstance.currentHandPosition)
                     {
                         movePick(notePrefab);
-                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                            currentTimestamp, nextTimestamp);
+                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                     }
                     else if (!inHand2)
                     {
@@ -115,8 +112,7 @@ public class AnimationHand :  MonoBehaviour
                             }
 
                             movePick(notePrefab);
-                            animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                                currentTimestamp, nextTimestamp);
+                            animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                             MidiManager.midiManagerInstance.currentHandPosition = 1;
                         }
                     }
@@ -133,8 +129,7 @@ public class AnimationHand :  MonoBehaviour
                     if (handPositionNote == MidiManager.midiManagerInstance.currentHandPosition)
                     {
                         movePick(notePrefab);
-                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                            currentTimestamp, nextTimestamp);
+                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                     }
                     else if ((!inHand1 || MidiManager.midiManagerInstance.predominantlyHand == 2) && MidiManager.midiManagerInstance.currentHandPosition == 1)
                     {
@@ -150,8 +145,7 @@ public class AnimationHand :  MonoBehaviour
                         }
 
                         movePick(notePrefab);
-                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                            currentTimestamp, nextTimestamp);
+                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                         MidiManager.midiManagerInstance.currentHandPosition = 2;
                     }
                     else if ((!inHand3 || MidiManager.midiManagerInstance.predominantlyHand == 1) && MidiManager.midiManagerInstance.currentHandPosition == 3)
@@ -168,8 +162,7 @@ public class AnimationHand :  MonoBehaviour
                         }
 
                         movePick(notePrefab);
-                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                            currentTimestamp, nextTimestamp);
+                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                         MidiManager.midiManagerInstance.currentHandPosition = 2;
                     }
                 }
@@ -185,8 +178,7 @@ public class AnimationHand :  MonoBehaviour
                     if (handPositionNote == MidiManager.midiManagerInstance.currentHandPosition)
                     {
                         movePick(notePrefab);
-                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                            currentTimestamp, nextTimestamp);
+                        animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                     }
                     else if (!inHand2)
                     {
@@ -204,8 +196,7 @@ public class AnimationHand :  MonoBehaviour
                             }
 
                             movePick(notePrefab);
-                            animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4,
-                                currentTimestamp, nextTimestamp);
+                            animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                             MidiManager.midiManagerInstance.currentHandPosition = 3;
                         }
                     }
@@ -273,19 +264,5 @@ public class AnimationHand :  MonoBehaviour
         }
     }
 
-    //IEnumerator SlerpRotation(double slerpDuration)
-    //{
-    //    double timeElapesd = 0;
-
-    //    while (timeElapesd < slerpDuration)
-    //    {
-    //        pick.localRotation = Quaternion.Slerp(pick.localRotation, pickRotation2,
-    //            (float)(timeElapesd / (slerpDuration)));
-
-    //        timeElapesd += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    pick.localRotation = pickRotation2;
-    //}
     #endregion
 }

@@ -21,8 +21,7 @@ public class AnimationFinger :  MonoBehaviour
 
     #region Funciones de animacion
 
-    public void moveFingerUp(Quaternion rotationFinger2, Quaternion rotationFinger3, Quaternion rotationFinger4, 
-        double currentTimestamp, double nextTimestamp)
+    public void moveFingerUp(Quaternion rotationFinger2, Quaternion rotationFinger3, Quaternion rotationFinger4)
     {        
             finger2.localRotation = rotationFinger2;
             finger3.localRotation = rotationFinger3;

@@ -29,8 +29,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -8484137637020333507}
-  - {fileID: 5387956554882024380}
-  - {fileID: 3875672607674902381}
+  - {fileID: 1108625209981981188}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -79,19 +78,17 @@ AudioMixerController:
   m_EnableSuspend: 0
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: cca1931615c99894bae7b2322a5d8b12
-    name: Volumen
-  - guid: ad72b65fae37ff54cb117d65670748ff
-    name: CambiarMidi
-  - guid: de2dd60488aa1114dad788b08b2f46c7
+  - guid: 967a6fd4b5b26964086e3e0b63d645e4
     name: IniciarMidi
-  - guid: 59c17c38f39e5a94293944a6cd1e1435
+  - guid: 587f48cb63fc99847bc11b57ceaad2f1
     name: PausarMidi
-  - guid: 89b03caacaf846f458de944228d0e108
+  - guid: 159fda2cb594dee41a92c7203d97c81d
+    name: FinalizarMidi
+  - guid: ce2815368712b01458c3a5097e51ce9c
     name: PistaBajo
-  - guid: 8125f429e010ae743b83dc62722e903d
+  - guid: 4d02289aa806d3849ac87160d7a69eab
     name: CancionCompleta
-  - guid: 1a2637b669d8f3e4795b241caf65f66d
+  - guid: 7f6111dca1ae94144bcb48fea4d64b49
     name: Velocidad
   m_AudioMixerGroupViews:
   - guids:
@@ -221,57 +218,57 @@ AudioMixerSnapshotController:
     6e61abfff9af3f44889b95619f35af5d: 0.1
     b20ccbffc562a3440a2e690778d7b757: 0.1
   m_TransitionOverrides: {}
---- !u!244 &3875672607674902381
+--- !u!244 &1108625209981981188
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: f33919d4d4b456a44b59234f3e635cdf
-  m_EffectName: Duck Volume
-  m_MixLevel: bb7a578e44808364c82ac6cc1fde6c45
+  m_EffectID: 63674010f92c681498c77e57565aa7bf
+  m_EffectName: audioplugin_MidiProcessorSynth_
+  m_MixLevel: 9344e34ed54e99643a8fd762c2aba181
   m_Parameters:
-  - m_ParameterName: Threshold
-    m_GUID: bee4c65625286ee49b13ec0369d22393
-  - m_ParameterName: Ratio
-    m_GUID: b361a5e080aa6d141b8b8a7bef73d3dc
-  - m_ParameterName: Attack Time
-    m_GUID: 6e61abfff9af3f44889b95619f35af5d
-  - m_ParameterName: Release Time
-    m_GUID: 24c47078da4ece94fae3b90b3367d57a
-  - m_ParameterName: Make-up Gain
-    m_GUID: cca1931615c99894bae7b2322a5d8b12
-  - m_ParameterName: Knee
-    m_GUID: 14bdb49295d277940a27937c0e21dff6
-  - m_ParameterName: Sidechain Mix
-    m_GUID: a1ca5d7c892790d4fbd078befabec2dc
+  - m_ParameterName: Iniciar Midi
+    m_GUID: 967a6fd4b5b26964086e3e0b63d645e4
+  - m_ParameterName: Pausar Midi
+    m_GUID: 587f48cb63fc99847bc11b57ceaad2f1
+  - m_ParameterName: Finalizar Midi
+    m_GUID: 159fda2cb594dee41a92c7203d97c81d
+  - m_ParameterName: Pista Bajo
+    m_GUID: ce2815368712b01458c3a5097e51ce9c
+  - m_ParameterName: Cancion complet
+    m_GUID: 4d02289aa806d3849ac87160d7a69eab
+  - m_ParameterName: Velocidad
+    m_GUID: 7f6111dca1ae94144bcb48fea4d64b49
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!244 &5387956554882024380
+--- !u!244 &2865623084574325833
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: 6b8020c9d65951b45bc049c549cca901
-  m_EffectName: audioplugin_MidiProcessorSynth_
-  m_MixLevel: 7b0fa4ece5d75684d9245892c9045c41
+  m_EffectID: a13b1b58823dfc44d8d4c047cc95b664
+  m_EffectName: Duck Volume
+  m_MixLevel: e8aa662d97d0060419bf8d2e6eff2c4b
   m_Parameters:
-  - m_ParameterName: Cambiar Midi
-    m_GUID: ad72b65fae37ff54cb117d65670748ff
-  - m_ParameterName: Iniciar Midi
-    m_GUID: de2dd60488aa1114dad788b08b2f46c7
-  - m_ParameterName: Pausar Midi
-    m_GUID: 59c17c38f39e5a94293944a6cd1e1435
-  - m_ParameterName: Pista Bajo
-    m_GUID: 89b03caacaf846f458de944228d0e108
-  - m_ParameterName: Cancion complet
-    m_GUID: 8125f429e010ae743b83dc62722e903d
-  - m_ParameterName: Velocidad
-    m_GUID: 1a2637b669d8f3e4795b241caf65f66d
+  - m_ParameterName: Threshold
+    m_GUID: 200e469f973df8449813db6d75279f16
+  - m_ParameterName: Ratio
+    m_GUID: 70549668f647a224fbc5faf3f3ac66a9
+  - m_ParameterName: Attack Time
+    m_GUID: b69eeeb2849a61146ade9ae16fd2fe00
+  - m_ParameterName: Release Time
+    m_GUID: 981d4584965ec844dad04b8a1209bb75
+  - m_ParameterName: Make-up Gain
+    m_GUID: 8438c970ddc23b64d95e18cf6391b73c
+  - m_ParameterName: Knee
+    m_GUID: 21da81f44a770a5499e7ca723b9b5c93
+  - m_ParameterName: Sidechain Mix
+    m_GUID: c5838b6c3bac421418176cc39bde97f4
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0

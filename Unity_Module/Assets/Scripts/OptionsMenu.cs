@@ -21,12 +21,18 @@ public class OptionsMenu : MonoBehaviour
 
     public void selectNoteVelocitySlider()
     {
-        velocityField.text = velocitySlider.value.ToString().Substring(0,5);
+        velocityField.text = velocitySlider.value.ToString("N3");
         midiAudioMixerGroup.audioMixer.SetFloat("Velocidad", velocitySlider.value);
     }
 
     public void selectNoteVelocityField()
     {
+        if (float.Parse(velocityField.text) < 0.5 || float.Parse(velocityField.text) > 1)
+        {
+            velocitySlider.value = 1;
+            velocityField.text = "1";
+            midiAudioMixerGroup.audioMixer.SetFloat("Velocidad", 1);
+        }
         velocitySlider.value = float.Parse(velocityField.text);
         midiAudioMixerGroup.audioMixer.SetFloat("Velocidad", float.Parse(velocityField.text));
     }

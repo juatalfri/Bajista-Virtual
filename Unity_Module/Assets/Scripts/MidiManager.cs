@@ -114,8 +114,8 @@ public class MidiManager : MonoBehaviour
 
     public void SalirAnimacion()
     {
-        //midiAudioMixerGroup.audioMixer.SetFloat("IniciarMidi", 0);
         midiAudioMixerGroup.audioMixer.SetFloat("PistaBajo", 0);
+        midiAudioMixerGroup.audioMixer.SetFloat("Velocidad", 1);
         midiAudioMixerGroup.audioMixer.SetFloat("FinalizarMidi", 1);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

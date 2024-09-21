@@ -9,15 +9,6 @@ public class AnimationHand :  MonoBehaviour
     #region Definicion de variables
 
     [SerializeField] Transform hand;
-    [SerializeField] Transform pick;
-
-    [SerializeField] Vector3 pickPosition1;
-    [SerializeField] Vector3 pickPosition2;
-    [SerializeField] Vector3 pickPosition3;
-    [SerializeField] Vector3 pickPosition4;
-    
-    [SerializeField] Quaternion pickRotation1;
-    [SerializeField] Quaternion pickRotation2;
 
     [SerializeField] Vector3 handPosition4;
     [SerializeField] Vector3 handPosition1;
@@ -39,7 +30,7 @@ public class AnimationHand :  MonoBehaviour
 
     public void moveHand(GameObject notePrefab, int note, int handPositionNote, Quaternion rotationFinger2,
         Quaternion rotationFinger3, Quaternion rotationFinger4, double currentTimestamp, double nextTimestamp,
-        GameObject freeNote = null, AnimationFinger animationFinger = null)
+        GameObject freeNote = null, AnimationFinger animationFinger = null, AnimationPick animationPick = null) 
     {
         bool inHand1 = MidiManager.midiManagerInstance.notesHand1.Contains(note);
         bool inHand2 = MidiManager.midiManagerInstance.notesHand2.Contains(note);
@@ -52,7 +43,7 @@ public class AnimationHand :  MonoBehaviour
                 {
                     if (freeNote.GetComponent<MeshRenderer>().material.color == standardNote.color)
                     {
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         freeNote.GetComponent<MeshRenderer>().material = colouredNote;
                     }
                     else
@@ -77,7 +68,7 @@ public class AnimationHand :  MonoBehaviour
                             hand.localRotation = handRotation1;
                             StartCoroutine(SlerpPosition(0.03, handPosition4));
                         }
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                         MidiManager.midiManagerInstance.currentHandPosition = 4;
                     }
@@ -93,7 +84,7 @@ public class AnimationHand :  MonoBehaviour
                 {
                     if (handPositionNote == MidiManager.midiManagerInstance.currentHandPosition)
                     {
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                     }
                     else if (!inHand2)
@@ -111,7 +102,7 @@ public class AnimationHand :  MonoBehaviour
                                 StartCoroutine(SlerpPosition(0.03, handPosition1));
                             }
 
-                            movePick(notePrefab);
+                            animationPick.movePick(notePrefab);
                             animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                             MidiManager.midiManagerInstance.currentHandPosition = 1;
                         }
@@ -128,7 +119,7 @@ public class AnimationHand :  MonoBehaviour
                 {
                     if (handPositionNote == MidiManager.midiManagerInstance.currentHandPosition)
                     {
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                     }
                     else if ((!inHand1 || MidiManager.midiManagerInstance.predominantlyHand == 2) && MidiManager.midiManagerInstance.currentHandPosition == 1)
@@ -144,7 +135,7 @@ public class AnimationHand :  MonoBehaviour
                             StartCoroutine(SlerpPosition(0.03, handPosition2));
                         }
 
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                         MidiManager.midiManagerInstance.currentHandPosition = 2;
                     }
@@ -161,7 +152,7 @@ public class AnimationHand :  MonoBehaviour
                             StartCoroutine(SlerpPosition(0.03, handPosition2));
                         }
 
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                         MidiManager.midiManagerInstance.currentHandPosition = 2;
                     }
@@ -177,7 +168,7 @@ public class AnimationHand :  MonoBehaviour
                 {
                     if (handPositionNote == MidiManager.midiManagerInstance.currentHandPosition)
                     {
-                        movePick(notePrefab);
+                        animationPick.movePick(notePrefab);
                         animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                     }
                     else if (!inHand2)
@@ -195,7 +186,7 @@ public class AnimationHand :  MonoBehaviour
                                 StartCoroutine(SlerpPosition(0.03, handPosition3));
                             }
 
-                            movePick(notePrefab);
+                            animationPick.movePick(notePrefab);
                             animationFinger.moveFingerUp(rotationFinger2, rotationFinger3, rotationFinger4);
                             MidiManager.midiManagerInstance.currentHandPosition = 3;
                         }
@@ -209,59 +200,21 @@ public class AnimationHand :  MonoBehaviour
         }
     }
 
-    void movePick(GameObject notePrefab)
+    IEnumerator SlerpPosition(double slerpDuration, Vector3 newPosition)
     {
-        if (notePrefab.name.Contains("String 1"))
-        {
-            StartCoroutine(SlerpPosition(0.02, pickPosition1, "pick"));
-        }
-        else if (notePrefab.name.Contains("String 2"))
-        {
-            StartCoroutine(SlerpPosition(0.02, pickPosition2, "pick"));
-        }
-        else if (notePrefab.name.Contains("String 3"))
-        {
-            StartCoroutine(SlerpPosition(0.02, pickPosition3, "pick"));
-        }
-        else if (notePrefab.name.Contains("String 4"))
-        {
-            StartCoroutine(SlerpPosition(0.02, pickPosition4, "pick"));
-        }
-    }
+        double timeElapsed = 0;
 
-    IEnumerator SlerpPosition(double slerpDuration, Vector3 newPosition, String objectType = "hand")
-    {
-        double timeElapesd = 0;
-
-        if (objectType == "pick")
+        while (timeElapsed < slerpDuration)
         {
-            pick.localPosition = newPosition;
-            newPosition.y = newPosition.y - 0.4f;
-        }
-        while (timeElapesd < slerpDuration)
-        {
-            if (objectType == "pick")
-            {
-                pick.localPosition = Vector3.Slerp(pick.localPosition, newPosition,
-                    (float)(timeElapesd / slerpDuration));
-            }
-            else
-            {
-                hand.localPosition = Vector3.Slerp(hand.localPosition, newPosition,
-                    (float)(timeElapesd / slerpDuration));
-            }
 
-            timeElapesd += Time.deltaTime;
+            hand.localPosition = Vector3.Slerp(hand.localPosition, newPosition,
+                    (float)(timeElapsed / slerpDuration));
+
+            timeElapsed += Time.deltaTime;
             yield return null;
         }
-        if (objectType == "pick")
-        {
-            pick.localPosition = newPosition;
-        }
-        else
-        {
-            hand.localPosition = newPosition;
-        }
+
+        hand.localPosition = newPosition;
     }
 
     #endregion

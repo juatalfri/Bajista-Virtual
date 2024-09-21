@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AnimationPick :  MonoBehaviour
@@ -15,9 +16,6 @@ public class AnimationPick :  MonoBehaviour
     [SerializeField] Vector3 pickPosition2;
     [SerializeField] Vector3 pickPosition3;
     [SerializeField] Vector3 pickPosition4;
-    
-    [SerializeField] Quaternion pickRotation1;
-    [SerializeField] Quaternion pickRotation2;
 
     [SerializeField] Vector3 handPickPosition1;
     [SerializeField] Vector3 handPickPosition2;
@@ -27,7 +25,6 @@ public class AnimationPick :  MonoBehaviour
     [SerializeField] Quaternion handPickRotation1;
     [SerializeField] Quaternion handPickRotation2;
 
-    [SerializeField] bool pickMode;
 
     #endregion
 
@@ -35,72 +32,78 @@ public class AnimationPick :  MonoBehaviour
 
     public void movePick(GameObject notePrefab)
     {        
-        if (pickMode)
+        if (MidiManager.midiManagerInstance.pickMode)
         {
+
             if (notePrefab.name.Contains("String 1"))
             {
-                StartCoroutine(SlerpPosition(0.02, pickPosition1));
+                StartCoroutine(Slerp(0.02, pickPosition1));
             }
             else if (notePrefab.name.Contains("String 2"))
             {
-                StartCoroutine(SlerpPosition(0.02, pickPosition2));
+                StartCoroutine(Slerp(0.02, pickPosition2));
             }
             else if (notePrefab.name.Contains("String 3"))
             {
-                StartCoroutine(SlerpPosition(0.02, pickPosition3));
+                StartCoroutine(Slerp(0.02, pickPosition3));
             }
             else if (notePrefab.name.Contains("String 4"))
             {
-                StartCoroutine(SlerpPosition(0.02, pickPosition4));
+                StartCoroutine(Slerp(0.02, pickPosition4));
             }
         }
         else
         {
             if (notePrefab.name.Contains("String 1"))
             {
-                StartCoroutine(SlerpPosition(0.02, handPickPosition1));
+                StartCoroutine(Slerp(0.02, handPickPosition1));
             }
             else if (notePrefab.name.Contains("String 2"))
             {
-                StartCoroutine(SlerpPosition(0.02, handPickPosition2));
+                StartCoroutine(Slerp(0.02, handPickPosition2));
             }
             else if (notePrefab.name.Contains("String 3"))
             {
-                StartCoroutine(SlerpPosition(0.02, handPickPosition3));
+                StartCoroutine(Slerp(0.02, handPickPosition3));
             }
             else if (notePrefab.name.Contains("String 4"))
             {
-                StartCoroutine(SlerpPosition(0.02, handPickPosition4));
+                StartCoroutine(Slerp(0.02, handPickPosition4));
             }
         }
     }
 
-    IEnumerator SlerpPosition(double slerpDuration, Vector3 newPosition)
+    IEnumerator Slerp(double slerpDuration, Vector3 newPosition)
     {
-        Transform obj;
-        if (pickMode)
+        double timeElapsed = 0;
+        
+        if (MidiManager.midiManagerInstance.pickMode)
         {
-            obj = pick;
+            pick.localPosition = newPosition;
+            newPosition.y = newPosition.y - 0.5f;
+            while (timeElapsed < slerpDuration)
+            {
+                pick.localPosition = Vector3.Slerp(pick.localPosition, newPosition,
+                        (float)(timeElapsed / slerpDuration));
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            pick.localPosition = newPosition;
         }
         else
         {
-            obj = handPick;
-        }
+            handPick.localPosition = newPosition;
+            handPick.localRotation = handPickRotation1;
 
-        double timeElapsed = 0;
-
-        obj.localPosition = newPosition;
-        newPosition.y = newPosition.y - 0.4f;
-        
-        while (timeElapsed < slerpDuration)
-        {
-            obj.localPosition = Vector3.Slerp(obj.localPosition, newPosition,
-                    (float)(timeElapsed / slerpDuration));
-            timeElapsed += Time.deltaTime;
-            yield return null;
+            while (timeElapsed < slerpDuration)
+            {
+                handPick.localRotation = Quaternion.Slerp(handPick.localRotation, handPickRotation2,
+                        (float)(timeElapsed / slerpDuration));
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            handPick.localRotation = handPickRotation2;
         }
-        obj.localPosition = newPosition;
     }
-
     #endregion
 }

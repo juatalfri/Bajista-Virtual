@@ -34,6 +34,10 @@ public class MidiManager : MonoBehaviour
     [SerializeField] GameObject animationMenu;
     [SerializeField] TextMeshProUGUI pauseResumeLabel;
 
+    public bool pickMode = false;
+    [SerializeField] TextMeshProUGUI pickLabel;
+    [SerializeField] GameObject handPick;
+    [SerializeField] GameObject pick;
     #endregion
 
     #region Funciones MidiManager
@@ -119,6 +123,24 @@ public class MidiManager : MonoBehaviour
         midiAudioMixerGroup.audioMixer.SetFloat("FinalizarMidi", 1);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PickMode()
+    {
+        if (!pickMode)
+        {
+            pickLabel.text = "Mano y pica";
+            handPick.SetActive(false);
+            pick.SetActive(true);
+            pickMode = true;
+        }
+        else
+        {
+            pickLabel.text = "Pica";
+            handPick.SetActive(true);
+            pick.SetActive(false);
+            pickMode = false;
+        }
     }
 
     #endregion

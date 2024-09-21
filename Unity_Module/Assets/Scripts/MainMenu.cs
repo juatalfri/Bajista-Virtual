@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] AudioMixerGroup midiAudioMixerGroup;
     [SerializeField] TMP_Dropdown trackDropdown;
+    [SerializeField] TMP_InputField selectedMidiField;
     [SerializeField] Toggle trackMode;
     [SerializeField] AudioSource midiAudioSource;
 
@@ -34,6 +35,7 @@ public class MainMenu : MonoBehaviour
         string[] newMidi = StandaloneFileBrowser.OpenFilePanel("Abrir Archivo Midi", mediaPath + "\\Midi samples",
             extensions, false);
         File.WriteAllText(mediaPath + "\\Midipath.txt", newMidi[0]);
+        selectedMidiField.text = newMidi[0];
         midiSelected = true;
     }
 

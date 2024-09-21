@@ -41,6 +41,7 @@ public class FretboardNotes : MonoBehaviour
         if (index < timeStamps.Count && MidiManager.midiManagerInstance.currentTime >= timeStamps[index])
         {
             AnimationHand animationHand = FindObjectOfType<AnimationHand>();
+            AnimationPick animationPick = FindObjectOfType<AnimationPick>();
             AnimationFinger[] animationFingers = FindObjectsOfType<AnimationFinger>();
             if (freeNote != null)
             {
@@ -54,7 +55,7 @@ public class FretboardNotes : MonoBehaviour
                     if (animationFinger.gameObject.name == finger.name)
                     {
                         animationHand.moveHand(notePrefab, noteNumber, handPosition, rotationFinger2,
-                            rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote, animationFinger);
+                            rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote, animationFinger, animationPick);
                     }
                 }
             }

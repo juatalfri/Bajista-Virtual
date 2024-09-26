@@ -279,7 +279,7 @@ void MidiProcessorSynth_ModuleAudioProcessor::loadMidiData() {
                     if (currentTrack->get() == index)
                     {
                         timestamps.push_back(msg.getTimeStamp() / noteVelocity->get());
-                        notesNumber.push_back(msg.getNoteNumber() / noteVelocity->get());
+                        notesNumber.push_back(msg.getNoteNumber());
                     }
 
                     double samplePosition = getSampleRate() * (msg.getTimeStamp() / noteVelocity->get() + currentPositionSeconds - pauseSeconds);
@@ -298,7 +298,7 @@ void MidiProcessorSynth_ModuleAudioProcessor::loadMidiData() {
             juce::MidiMessage& msg = track->getEventPointer(i)->message;
             if (msg.isNoteOnOrOff()) {
                 timestamps.push_back(msg.getTimeStamp() / noteVelocity->get());
-                notesNumber.push_back(msg.getNoteNumber() / noteVelocity->get());
+                notesNumber.push_back(msg.getNoteNumber());
 
                 double samplePosition = getSampleRate() * (msg.getTimeStamp() / noteVelocity->get() + currentPositionSeconds - pauseSeconds);
                 midiBuffer.addEvent(msg, samplePosition);

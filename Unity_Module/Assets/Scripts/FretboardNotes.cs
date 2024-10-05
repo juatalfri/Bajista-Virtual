@@ -16,6 +16,7 @@ public class FretboardNotes : MonoBehaviour
     [SerializeField] Quaternion rotationFinger2;
 
     [SerializeField] GameObject freeNote;
+    [SerializeField] bool isFreeNote;
 
     int index = 0;
 
@@ -43,10 +44,10 @@ public class FretboardNotes : MonoBehaviour
             AnimationHand animationHand = FindObjectOfType<AnimationHand>();
             AnimationPick animationPick = FindObjectOfType<AnimationPick>();
             AnimationFinger[] animationFingers = FindObjectsOfType<AnimationFinger>();
-            if (freeNote != null)
+            if (isFreeNote)
             {
                 animationHand.moveHand(notePrefab, noteNumber, handPosition, rotationFinger2,
-                    rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote);
+                    rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote, animationPick:animationPick);
             }
             else
             {
@@ -55,7 +56,7 @@ public class FretboardNotes : MonoBehaviour
                     if (animationFinger.gameObject.name == finger.name)
                     {
                         animationHand.moveHand(notePrefab, noteNumber, handPosition, rotationFinger2,
-                            rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, freeNote, animationFinger, animationPick);
+                            rotationFinger3, rotationFinger4, timeStamps[index], timeStamps[index] + 1, animationFinger:animationFinger, animationPick:animationPick);
                     }
                 }
             }

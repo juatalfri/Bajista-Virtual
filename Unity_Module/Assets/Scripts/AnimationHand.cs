@@ -35,20 +35,21 @@ public class AnimationHand :  MonoBehaviour
         bool inHand1 = MidiManager.midiManagerInstance.notesHand1.Contains(note);
         bool inHand2 = MidiManager.midiManagerInstance.notesHand2.Contains(note);
         bool inHand3 = MidiManager.midiManagerInstance.notesHand3.Contains(note);
+        bool inHand4 = MidiManager.midiManagerInstance.notesHand4.Contains(note);
 
         switch (handPositionNote)
         {
             case 0:
-                if (!inHand1 && !inHand2 && !inHand3)
+                if (!inHand1 && !inHand2 && !inHand3 && !inHand4)
                 {
                     if (freeNote.GetComponent<MeshRenderer>().material.color == standardNote.color)
                     {
                         animationPick.movePick(notePrefab);
-                        freeNote.GetComponent<MeshRenderer>().material = colouredNote;
+                        freeNote.GetComponent<MeshRenderer>().material.color = colouredNote.color;
                     }
                     else
                     {
-                        freeNote.GetComponent<MeshRenderer>().material = standardNote;
+                        freeNote.GetComponent<MeshRenderer>().material.color = standardNote.color;
                     }
                 }
                 break;

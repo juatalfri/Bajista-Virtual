@@ -362,6 +362,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.82999915, y: 0.000000044703473, z: -0.000000115513075, w: 0.5577647}
   rotationFinger2: {x: 0.005150989, y: -0.05549183, z: 0.03434534, w: 0.997855}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &20799698
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +418,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8846699, y: -0.011511778, z: -0.02587578, w: 0.46535695}
   rotationFinger2: {x: -0.25838754, y: -0.040468678, z: -0.054241076, w: 0.96366805}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &20799701
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -572,6 +574,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.92506504, y: -0.051573362, z: -0.08014871, w: 0.36765614}
   rotationFinger2: {x: 0.026769068, y: -0.087938376, z: -0.38521484, w: 0.9182373}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &30823655
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,6 +813,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.5070426, y: 0.00000007450582, z: 0.00000010430815, w: 0.8619211}
   rotationFinger2: {x: -0.22676942, y: 0.25280958, z: -0.4452002, w: 0.82852864}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &66518216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +1053,7 @@ MonoBehaviour:
   rotationFinger3: {x: 0, y: 0, z: 0, w: 0}
   rotationFinger2: {x: 0, y: 0, z: 0, w: 0}
   freeNote: {fileID: 360782945}
+  isFreeNote: 1
 --- !u!1 &137508072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1159,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.681155, y: 0.027724937, z: 0.033504985, w: 0.73084646}
   rotationFinger2: {x: -0.11924718, y: -0.4430888, z: 0.13290885, w: 0.8785145}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &167167854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,6 +1806,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8216524, y: -0.000000067520894, z: -0.00000011175872, w: 0.5699889}
   rotationFinger2: {x: -0.19603577, y: -0.041615646, z: -0.29761875, w: 0.93341374}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &292563409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2066,6 +2073,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7055856, y: 0.000000011641532, z: -0.00000011175871, w: 0.7086248}
   rotationFinger2: {x: -0.32924274, y: -0.015701985, z: -0.40716198, w: 0.85180503}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &310505906
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2269,6 +2277,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.6423607, y: -0.036411915, z: -0.04332457, w: 0.7643101}
   rotationFinger2: {x: -0.20807561, y: -0.09671967, z: 0.11995832, w: 0.9658985}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &334599618
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,6 +2333,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.6382343, y: -0.020563334, z: -0.019473776, w: 0.76932114}
   rotationFinger2: {x: -0.43529797, y: -0.029526152, z: -0.060893487, w: 0.89773935}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &334599621
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2613,6 +2623,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.66339874, y: 0.00000004470349, z: 0.000000014901165, w: 0.7482661}
   rotationFinger2: {x: -0.19828066, y: 0.09245976, z: -0.41238016, w: 0.8843521}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &351622709
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,6 +2832,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.83722895, y: -0.000000033061948, z: 0.00000002328306, w: 0.5468526}
   rotationFinger2: {x: -0.007572748, y: 0.0035311973, z: -0.42260358, w: 0.90627617}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1001 &360782941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3045,6 +3057,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8735231, y: 0.10592698, z: -0.17719997, w: 0.4408368}
   rotationFinger2: {x: 0.16720523, y: -0.024405515, z: -0.22996716, w: 0.9584164}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &368820055
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,6 +3163,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.57117, y: -0.08171785, z: 0.044802826, w: 0.8155243}
   rotationFinger2: {x: -0.15479375, y: -0.09583088, z: -0.15426987, w: 0.97111076}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &371566689
 GameObject:
   m_ObjectHideFlags: 0
@@ -3645,6 +3659,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9748229, y: 0.00000012852253, z: 0.00000016763808, w: 0.22298062}
   rotationFinger2: {x: -0.20506664, y: -0.2446814, z: -0.3348955, w: 0.88652337}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &394591127
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,6 +3765,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.84640205, y: 0.15534429, z: -0.11315784, w: 0.49665582}
   rotationFinger2: {x: 0.065188006, y: 0.09573741, z: -0.14832784, w: 0.98213226}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &417059847
 GameObject:
   m_ObjectHideFlags: 0
@@ -3836,7 +3852,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 55.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3991,6 +4007,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7304154, y: 0.00000008207282, z: -0.000000007450583, w: 0.6830031}
   rotationFinger2: {x: -0.359582, y: -0.0051006493, z: -0.4147127, w: 0.8358757}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &431750075
 GameObject:
   m_ObjectHideFlags: 0
@@ -4176,6 +4193,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7567545, y: -0.05372445, z: 0.11413206, w: 0.6414127}
   rotationFinger2: {x: 0.07994781, y: -0.44551545, z: -0.040803015, w: 0.8907634}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &526145884
 GameObject:
   m_ObjectHideFlags: 0
@@ -4281,6 +4299,7 @@ MonoBehaviour:
   rotationFinger3: {x: 0, y: 0, z: 0, w: 0}
   rotationFinger2: {x: 0, y: 0, z: 0, w: 0}
   freeNote: {fileID: 360782943}
+  isFreeNote: 1
 --- !u!1 &582363643
 GameObject:
   m_ObjectHideFlags: 0
@@ -4336,6 +4355,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9331706, y: -0.024323348, z: -0.024516467, w: 0.35777086}
   rotationFinger2: {x: -0.17307547, y: -0.1519844, z: -0.38139936, w: 0.8952543}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &582363646
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4624,6 +4644,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7114489, y: 0.12369369, z: -0.06013909, w: 0.689147}
   rotationFinger2: {x: -0.09100387, y: 0.15284094, z: -0.16876303, w: 0.9694725}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &613177053
 GameObject:
   m_ObjectHideFlags: 0
@@ -4777,6 +4798,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.81400204, y: -0.10849943, z: 0.0848098, w: 0.5643013}
   rotationFinger2: {x: -0.20163742, y: 0.010274801, z: -0.39499125, w: 0.89622474}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &649898198
 GameObject:
   m_ObjectHideFlags: 0
@@ -4882,6 +4904,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.59964305, y: 0.000000081956394, z: 0.000000014901163, w: 0.80026764}
   rotationFinger2: {x: -0.2776766, y: -0.0686768, z: 0.11119779, w: 0.95174277}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &713387690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4937,6 +4960,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8383, y: -0.005624822, z: -0.011115002, w: 0.54506695}
   rotationFinger2: {x: -0.11182532, y: -0.005795211, z: -0.45566985, w: 0.8830779}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &713387693
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5971,7 +5995,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 55.25
   m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6422,6 +6446,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7413411, y: 0.0000000074505815, z: -0.000000081956394, w: 0.67112845}
   rotationFinger2: {x: -0.36701825, y: -0.2524475, z: -0.052418124, w: 0.8937675}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &816083143
 GameObject:
   m_ObjectHideFlags: 0
@@ -7135,6 +7160,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.57336855, y: 0.00000007450579, z: -0.000000022351736, w: 0.8192977}
   rotationFinger2: {x: -0.37306738, y: -0.04768282, z: 0.18406484, w: 0.90811193}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &862508221
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7511,6 +7537,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.87814164, y: -0.09218481, z: -0.044633906, w: 0.46730843}
   rotationFinger2: {x: -0.19695438, y: -0.25229993, z: -0.10831516, w: 0.94118094}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &898240662
 GameObject:
   m_ObjectHideFlags: 0
@@ -7616,6 +7643,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.90031266, y: -0.056475595, z: -0.07677325, w: 0.42468044}
   rotationFinger2: {x: -0.099965885, y: -0.03403995, z: -0.39365584, w: 0.91317207}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &921511241
 GameObject:
   m_ObjectHideFlags: 0
@@ -7721,6 +7749,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7535946, y: -0.05792446, z: -0.05859953, w: 0.652155}
   rotationFinger2: {x: -0.091068015, y: -0.083643675, z: 0.12020985, w: 0.9850178}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &967577306
 GameObject:
   m_ObjectHideFlags: 0
@@ -8092,6 +8121,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9446731, y: -0.013751959, z: 0.039937887, w: 0.32528225}
   rotationFinger2: {x: -0.01882228, y: -0.068121426, z: 0.031824775, w: 0.9969917}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1001060733
 GameObject:
   m_ObjectHideFlags: 0
@@ -8632,6 +8662,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.95402557, y: 0.010801604, z: -0.022064243, w: 0.29871687}
   rotationFinger2: {x: -0.12486295, y: -0.15645622, z: -0.08677455, w: 0.9759103}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1039595501
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8737,6 +8768,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9249816, y: -0.03274185, z: -0.017559385, w: 0.37819138}
   rotationFinger2: {x: 0.0614678, y: -0.09401052, z: -0.44590423, w: 0.8880052}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1044445844
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8892,6 +8924,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9132608, y: -0.034212176, z: -0.033782255, w: 0.4045282}
   rotationFinger2: {x: -0.17640938, y: -0.45019042, z: -0.087095805, w: 0.8709895}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1097483748
 GameObject:
   m_ObjectHideFlags: 0
@@ -8997,6 +9030,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.86862314, y: -0.017144402, z: 0.030129988, w: 0.49425915}
   rotationFinger2: {x: -0.20808789, y: -0.055037543, z: -0.079558276, w: 0.9733144}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1110342920
 GameObject:
   m_ObjectHideFlags: 0
@@ -9102,6 +9136,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.58108705, y: 0.11138317, z: -0.08068866, w: 0.8021353}
   rotationFinger2: {x: -0.24078423, y: 0.17724484, z: -0.14291818, w: 0.9434944}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1137364695
 GameObject:
   m_ObjectHideFlags: 0
@@ -9463,6 +9498,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.6574723, y: 0.000000004747729, z: -0.000000039946357, w: 0.75347877}
   rotationFinger2: {x: -0.3838312, y: -0.039439254, z: -0.08833566, w: 0.91832185}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1187958571
 GameObject:
   m_ObjectHideFlags: 0
@@ -9568,6 +9604,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8951958, y: -0.00066089054, z: 0.0024251705, w: 0.44566604}
   rotationFinger2: {x: 0.19626185, y: -0.03763127, z: -0.007734514, w: 0.9797986}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1195197967
 GameObject:
   m_ObjectHideFlags: 0
@@ -9673,6 +9710,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9389207, y: 0.088210136, z: -0.16732754, w: 0.2874865}
   rotationFinger2: {x: 0.42312434, y: -0.08641198, z: -0.21450754, w: 0.87606245}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1195650506
 GameObject:
   m_ObjectHideFlags: 0
@@ -9814,6 +9852,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.94476855, y: 0.000000104308135, z: -0.000000096391894, w: 0.32773837}
   rotationFinger2: {x: 0.061960917, y: -0.12004926, z: -0.2754941, w: 0.9517626}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1206566645
 GameObject:
   m_ObjectHideFlags: 0
@@ -9919,6 +9958,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7139268, y: -0.0000000074505815, z: 0.00000018626454, w: 0.7002203}
   rotationFinger2: {x: -0.066905394, y: 0.2286979, z: -0.48386395, w: 0.8420788}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1213086186
 GameObject:
   m_ObjectHideFlags: 0
@@ -9974,6 +10014,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9391875, y: 0.000000048894435, z: 0.00000010244548, w: 0.3434049}
   rotationFinger2: {x: -0.04762115, y: -0.0054657166, z: 0.09476931, w: 0.9943446}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1213086189
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11181,6 +11222,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.69344515, y: -0.09062735, z: 0.10368953, w: 0.7072262}
   rotationFinger2: {x: -0.3321745, y: 0.06867323, z: -0.3891114, w: 0.8564674}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1275458869
 GameObject:
   m_ObjectHideFlags: 0
@@ -11473,6 +11515,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9056664, y: 0.13358082, z: 0.02230684, w: 0.4017798}
   rotationFinger2: {x: 0.35754058, y: 0.024057573, z: -0.047140867, w: 0.9323968}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1341756391
 GameObject:
   m_ObjectHideFlags: 0
@@ -11706,6 +11749,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7543373, y: 0, z: 0, w: 0.65648705}
   rotationFinger2: {x: -0.1476009, y: -0.0592344, z: 0.1059192, w: 0.9815734}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1357850192
 GameObject:
   m_ObjectHideFlags: 0
@@ -11811,6 +11855,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7063519, y: -0.037524704, z: -0.037499163, w: 0.7058703}
   rotationFinger2: {x: -0.3043724, y: -0.05617825, z: -0.043674033, w: 0.9498916}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1367747186
 GameObject:
   m_ObjectHideFlags: 0
@@ -11916,6 +11961,7 @@ MonoBehaviour:
   rotationFinger3: {x: 0, y: 0, z: 0, w: 0}
   rotationFinger2: {x: 0, y: 0, z: 0, w: 0}
   freeNote: {fileID: 360782946}
+  isFreeNote: 1
 --- !u!1 &1373804504
 GameObject:
   m_ObjectHideFlags: 0
@@ -12079,6 +12125,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.4387436, y: 0.000000014901159, z: 0.000000014901159, w: 0.8986123}
   rotationFinger2: {x: -0.33983558, y: 0.1584679, z: -0.39178324, w: 0.8401819}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1389163708
 GameObject:
   m_ObjectHideFlags: 0
@@ -12452,6 +12499,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9531898, y: -0.0759267, z: 0.049020104, w: 0.2885506}
   rotationFinger2: {x: 0.06026657, y: -0.18929882, z: -0.042297717, w: 0.9791551}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1413114633
 GameObject:
   m_ObjectHideFlags: 0
@@ -12507,6 +12555,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.6678461, y: -0.008320115, z: -0.009271375, w: 0.7441952}
   rotationFinger2: {x: -0.26296437, y: 0.07315093, z: -0.4497972, w: 0.8504006}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1413114636
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12737,6 +12786,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.91386735, y: -0.00000001792796, z: 0.0000000402797, w: 0.40601307}
   rotationFinger2: {x: 0.11209439, y: -0.05227053, z: -0.41937342, w: 0.899349}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1439412004
 GameObject:
   m_ObjectHideFlags: 0
@@ -12792,6 +12842,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8455757, y: 0.00000005029141, z: 0.000000052154054, w: 0.5338556}
   rotationFinger2: {x: -0.17782678, y: -0.026949553, z: 0.19761784, w: 0.96363825}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1439412007
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13310,6 +13361,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.81542355, y: 0.052569307, z: 0.04358769, w: 0.5748226}
   rotationFinger2: {x: -0.28408155, y: -0.35878396, z: -0.037470922, w: 0.8883511}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1467138397
 GameObject:
   m_ObjectHideFlags: 0
@@ -13682,6 +13734,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.73158526, y: -0.0000000721775, z: -0.00000008195639, w: 0.68174994}
   rotationFinger2: {x: -0.279578, y: -0.014552288, z: -0.30016163, w: 0.9118812}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1510171804
 GameObject:
   m_ObjectHideFlags: 0
@@ -13787,6 +13840,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8859484, y: 0.00000016950072, z: -0.000000022351744, w: 0.4637839}
   rotationFinger2: {x: -0.24127062, y: -0.11907432, z: -0.41202047, w: 0.8705452}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1511230924
 GameObject:
   m_ObjectHideFlags: 0
@@ -13842,6 +13896,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.83720624, y: -0.028930321, z: -0.018860644, w: 0.54579574}
   rotationFinger2: {x: -0.25145537, y: -0.0521856, z: -0.404109, w: 0.87791955}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1511230927
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14338,6 +14393,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7908345, y: -0.08483911, z: 0.1016205, w: 0.5975421}
   rotationFinger2: {x: 0.027130801, y: -0.07265477, z: 0.104299404, w: 0.99151754}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1664634508
 GameObject:
   m_ObjectHideFlags: 0
@@ -14443,6 +14499,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.857107, y: -0.15401897, z: 0.05777204, w: 0.4881683}
   rotationFinger2: {x: 0.1692837, y: -0.027602434, z: -0.0052714185, w: 0.98516667}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1668413009
 GameObject:
   m_ObjectHideFlags: 0
@@ -14705,6 +14762,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.89598143, y: -0.06727714, z: 0.060345836, w: 0.4347983}
   rotationFinger2: {x: -0.09361819, y: -0.09708154, z: -0.052929316, w: 0.98944896}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1682965029
 GameObject:
   m_ObjectHideFlags: 0
@@ -14944,6 +15002,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.77038354, y: -0.0000000018626451, z: -0.000000014901161, w: 0.6375809}
   rotationFinger2: {x: -0.28444293, y: -0.04857043, z: -0.08366336, w: 0.9537996}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1700865450
 GameObject:
   m_ObjectHideFlags: 0
@@ -15049,6 +15108,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.8189269, y: 0.00000011938397, z: 0.000000029802337, w: 0.57389796}
   rotationFinger2: {x: -0.29924858, y: -0.034570288, z: -0.41330078, w: 0.8593239}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1706068692
 GameObject:
   m_ObjectHideFlags: 0
@@ -15251,6 +15311,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.81011444, y: -0.031047035, z: -0.043015964, w: 0.5838667}
   rotationFinger2: {x: -0.20094827, y: -0.09075603, z: -0.08407562, w: 0.9717585}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1762035115
 GameObject:
   m_ObjectHideFlags: 0
@@ -15551,6 +15612,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.5315931, y: 0.000000023283059, z: -0.000000037252896, w: 0.8469999}
   rotationFinger2: {x: -0.43225878, y: 0.03487359, z: -0.40596947, w: 0.8044408}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1780407967
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16348,6 +16410,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7040946, y: 0.00000002793967, z: 0.000000029802315, w: 0.71010613}
   rotationFinger2: {x: -0.28731173, y: -0.049465094, z: 0.19321568, w: 0.936842}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &1885997679
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16503,6 +16566,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.9029193, y: 0.000000044703484, z: -0.000000115484, w: 0.42981023}
   rotationFinger2: {x: -0.095316306, y: -0.073135585, z: -0.291479, w: 0.9490027}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &1901786459 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 82df69fbb18f7b943ae1efca25e6cb35, type: 3}
@@ -16705,6 +16769,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.71594316, y: -0.019430995, z: 0.13723958, w: 0.684261}
   rotationFinger2: {x: -0.031749822, y: -0.42483264, z: 0.011630477, w: 0.90464026}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!1 &2005882187
 GameObject:
   m_ObjectHideFlags: 0
@@ -16760,6 +16825,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.37405068, y: 0.000000029802319, z: -0.00000013411044, w: 0.92740834}
   rotationFinger2: {x: -0.4558221, y: 0.17701222, z: -0.419923, w: 0.7645637}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &2005882190
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16971,7 +17037,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 55.25
   m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17076,6 +17142,7 @@ MonoBehaviour:
   rotationFinger3: {x: -0.7772044, y: -0.016326932, z: -0.023141067, w: 0.6286106}
   rotationFinger2: {x: -0.3448491, y: -0.0353747, z: -0.057692625, w: 0.93621546}
   freeNote: {fileID: 0}
+  isFreeNote: 0
 --- !u!23 &2026907872
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17616,7 +17683,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
+  m_fontSize: 72.35
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17771,6 +17838,7 @@ MonoBehaviour:
   rotationFinger3: {x: 0, y: 0, z: 0, w: 0}
   rotationFinger2: {x: 0, y: 0, z: 0, w: 0}
   freeNote: {fileID: 360782944}
+  isFreeNote: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
